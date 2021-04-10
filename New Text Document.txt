@@ -1,0 +1,512 @@
+
+
+user types 
+(customer, restaurant_manager, , admin)
+
+https://www.talabat.com/apiweb/v1/restaurants/info/egypt/chirger
+
+waiter, chef----staff
+
+run test
+vendor\bin\phpunit
+./vendor/bin/phpunit --version
+
+
+----------------------------------------------
+databse
+https://github.com/illuminate/database
+
+https://laravel.com/docs/4.2/eloquent
+https://laravel.com/docs/5.3/eloquent-relationships#one-to-many
+
+insert in 3 tables with relationship laravel
+
+https://stackoverflow.com/questions/40233510/one-to-many-relationship-with-multiple-tables-in-using-eloquent-orm-in-laravel
+
+https://laravel.com/docs/8.x/queries
+
+$str = "";
+for($i =0;$i < 9;$i++)
+{
+    $str.="aa";
+}
+try
+{
+    Capsule::transaction(function () use($str)
+    {
+        UserModel::create([
+            'email' => $str,
+        ]);
+
+        UserModel::create([
+            'email' => 'Laaaddaaaon'
+        ]);
+
+        
+    });
+    echo "dd";
+
+}
+catch (\Exception $ex)
+{
+    echo "string";
+
+}
+---------------------------------
+'''
+        for x in range(length):
+            print(data["db"]["vendor"]["product"].values()[x]["price"]["dollars"])
+
+        
+        with open(filename, 'r+') as dataFile:
+            data = json.load(dataFile)
+            print("test")
+            print(data[0])
+            restaurant = Helpers.oneChoice(data["restaurants"])
+            res["restaurant_name"] = restaurant["na"]
+            res["restaurant_category"] = restaurant["cs"]
+            res["restaurant_logo"] = restaurant["lg"]
+           
+       
+'''
+
+Why jwt 
+Only one query for all authorization lifcycle
+We will not change the role and email
+
+—
+Router::resource(route, class)
+Index
+Store
+Show
+Update
+destroy
+
+https://www.facebook.com/groups/egyptian.geeks/permalink/3929057263800619/
+
+
+BaseController
+—
+BaseModel
+Attributes 
+- tableName
+- data
+Methods
+- Get(id)
+- GetAll()
+- Insert()
+- Delete()
+- Update()
+
+public static $definition = array(	
+	'table' => 'product',
+	'primary' => 'product_id',
+	'fields' => array(
+	'category_id' => array('type' => self::TYPE_INT, 'validate' => 'isInt', 'size' => 11),
+	'name' => array('type' => self::TYPE_STRING, 'required' => true, 'validate' => 'isString', 'size' => 32),
+	'description' => array('type' => self::TYPE_STRING, 'required' => true),
+	'price' => array('type' => self::TYPE_FLOAT, 'required' => true),
+	'date_add' => array('type' => self::TYPE_DATE, 'validate' => 'isDate'),
+	'date_upd' => array('type' => self::TYPE_DATE, 'validate' => 'isDate'),
+	)
+	)
+
+
+—
+Statc varibles for statues codes
+HTTP_BAD_REQUEST code (400) and an error message. If the request is valid, the user data is saved and a token is returned along with the user’s saved details (excluding the password). The HTTP_CREATED (201) response lets the client know that a new resource has been created.
+Http _ok
+
+—
+Add function getInput() in request class
+—
+
+
+https://github.com/rakit/validation/blob/master/src/Validator.php
+
+—
+
+——————-
+In flutter...
+Define variable for every endpoint
+For host, version 
+
+
+ 
+Edit model and controller class
+To be in resources folder add every end point in folder, 
+restaurants 
+- RestaurantController
+- restaurantModel
+Auth
+- model table user
+- Controller /// register, auth me 
+Move utilities to core 
+
+
+
+———
+auth authMe, register
+restaurants search 
+Users /, /1, 
+Feeds /1  (recent restaurants in user area, recent meals in area, recommended restaurants)
+
+Add validation layer
+
+$rules = [
+            'name' => 'required',
+            'email' => 'required|min_length[6]|max_length[50]|valid_email|is_unique[user.email]',
+            'password' => 'required|min_length[8]|max_length[255]'
+        ];
+
+Rules
+required, min:6, max:6, email, 
+function:emailExistes, date, uploaded_file:0,500K,png,jpeg
+Enum
+
+Class validator
+Static Function validate(request get input, rules)
+Return error array
+
+If err arr
+
+
+Add for models findbyid, 
+
+Static Getpaylod in authorization class
+Prefex function in router 
+
+————-
+
+Recommender system for best matches restaurants or for selling 
+
+Machine learning for every additional meal send meal
+
+use Natural Language Processing and Sentiment Analysis to extract some information from the users reviews (see Reference (8)).
+
+
+
+Add function in authorizer for get payload
+
+
+https://stackoverflow.com/questions/5905877/how-to-run-the-php-code-asynchronous
+
+
+
+End points
+
+/v1
+
+/auth/me
+Auth/register 
+another resource called auth that will expect a user’s email and password and, in return, will generate the token used for authentication on certain operations. 
+
+And we will create the following operations for users resource:
+* POST on the endpoint /users (create a new user)
+* GET on the endpoint /users (list all users)
+* GET on the endpoint /users/:userId (get a specific user)
+* PATCH on the endpoint /users/:userId (update the data for a specific user)
+* DELETE on the endpoint /users/:userId (remove a specific user)———-
+
+
+Restaurants/id
+Restaurants/search
+
+https://blog.logrocket.com/how-to-secure-a-rest-api-using-jwt-7efd83e71432/
+
+————
+
+
+--------------------------------------------------
+
+/v1/auth
+1-Login
+- to let the user able to login into the system by providing username/email and password.
+
+--------------------------------------------------
+
+/v1/users (post req)
+2-register
+- to let the user able to sign up into the system by providing 
+--phone number
+--email
+--password
+--first name
+--last name
+--gender (male, female)
+--date of birth
+
+
+--------------------------------------------------
+
+/v1/Search?name=&category=&..etc
+3-Search
+- for Searching with filtering options by providing 
+--name
+--category
+--open now
+--phone number
+--Place
+
+--------------------------------------------------
+
+/v1/feed/{user-id}
+4-feeds
+-which users are exposed to meals uploaded with highlighting fo best restaurants, meals
+--the best restaurants in town
+--Recent meals
+--Hot & New restaurants
+
+
+
+Basically with that token we can acess all the private routes that are only accessible for authenticated users
+
+
+
+Routes 
+
+We have a multipe endpoints 
+
+For registering 
+
+Auth/register 
+
+Email
+Phone number
+Password 
+Repeated password
+First name
+Last name
+Gender
+Date of brith
+Role
+—Return
+User: id, email
+Token
+Refresh token
+
+For login
+Auth/me 
+
+Email
+Password 
+—Return
+Same for auth register 
+
+
+Users/me
+Token
+Id, and all user data
+
+
+Feeds/1
+For 4 artay
+
+Feeds
+For 3
+
+
+search
+term
+location
+latitude
+longitude
+categories
+limit
+offset
+sort_by
+https://www.yelp.com/developers/documentation/v3/business_search
+
+https://developers.zomato.com/documentation
+
+
+
+add two tables (waiter, chef)
+
+----------------------------------------------------------------------------
+Auth/register
+
+Email
+Phone number
+Password
+First name
+Last name
+Gender
+Date of brith
+Role (customer, restaurant_manager)
+
+
+—Return
+
+data: 
+token
+-----------------------------------
+auth/me 
+email
+password
+—Return
+
+data: 
+token
+---------------------------------
+
+auth/forget_password
+
+in body 
+email
+-----------------------------------
+
+users/verify
+in HTTP header 
+Authorization Bearer token
+
+in body 
+verification_code
+
+---------------------------------
+
+Users/me
+in HTTP header Authorization Bearer token
+
+{
+    "status": "Ok",
+    "data": {
+    	"id": 2,
+        "email": "",
+        "phone_number": "",
+        "role": "customer",
+        "first_name": "",
+        "last_name": "",
+        "gender": "male",
+        "date_of_birth": "0000-00-00",
+        "is_active": 0,
+        "created_at": "2021-02-05 06:19:57",
+        "updated_at": "2021-02-05 06:19:57",
+    }
+}
+---------------------------------------------------
+get req
+
+categories
+id, name
+
+---------------------------------------------------
+get req
+
+search
+
+restaurant_name
+categories
+limit = 20
+offset = 20
+
+---------------------------------------------------
+##### add cache for api 
+
+Feeds for web
+--Recent meals
+--Hot & New restaurants
+
+Feeds/1 for app
+--Recent meals
+--Hot & New restaurants
+--the best & recommended restaurants in town
+
+in HTTP header 
+Authorization Bearer token
+
+E.G. https://nofipay.net/api/v1/search?restaurant_name=test1&categories=Pizza,Indian
+Returns a list of restaurant.
+Method:GET
+Parameters:restaurant_name,categories
+---------------------------------------------------------
+E.G. https://nofipay.net/api/v1/categories
+Returns a list of categories.
+Method:GET
+Parameters:none
+---------------------------------------------------------
+E.G. https://nofipay.net/api/v1/users/check_confirmation_code
+Method:POST
+Body:
+{
+    "confirmation_code" : "31342"
+}
+HTTP header: Authorization: Bearer Token 
+---------------------------------------------------------
+E.G. https://nofipay.net/api/v1/users/me
+Method:POST
+HTTP header: Authorization: Bearer Token 
+---------------------------------------------------------
+E.G. https://nofipay.net/api/v1/users/send_verify_email
+Represents a Tarabeza user.
+Method:POST
+
+ADD (Authorization: Bearer Token)
+---------------------------------------------------------
+E.G. https://nofipay.net/api/v1/auth/me
+Returns a token.
+Method:POST
+Body:
+{
+    "email":"mahmoud_ahmed@stud.fci-cu.edu.eg",
+    "password":"pass"
+}
+---------------------------------------------------------
+E.G. https://nofipay.net/api/v1/auth/register
+Method:POST
+Body:
+{
+    "email":"mahmoud_ahmed@stud.fci-cu.edu.eg",
+    "phone_number":"01024970738",
+    "password":"password",
+    "first_name":"Mahmoud",
+    "last_name":"Ahmed",
+    "gender":"male",
+    "date_of_birth":"0000-00-00",
+    "role":"customer"
+}
+--------------------
+required
+required_if:another_field,value_1,value_2,...
+required_unless:another_field,value_1,value_2,...
+required_with:field_1,field_2,...
+required_without:field_1,field_2,...
+required_with_all:field_1,field_2,...
+required_without_all:field_1,field_2,...
+uploaded_file:min_size,max_size,extension_a,extension_b,...
+mimes:extension_a,extension_b,...
+default/defaults
+email
+uppercase
+lowercase
+json
+alpha
+numeric
+alpha_num
+alpha_dash
+alpha_spaces
+in:value_1,value_2,...
+not_in:value_1,value_2,...
+min:number
+max:number
+between:min,max
+digits:value
+digits_between:min,max
+url
+integer
+boolean
+ip
+ipv4
+ipv6
+extension:extension_a,extension_b,...
+array
+same:another_field
+regex:/your-regex/
+date:format
+accepted
+present
+different:another_field
+after:tomorrow
+before:yesterday
+callback
+nullable
