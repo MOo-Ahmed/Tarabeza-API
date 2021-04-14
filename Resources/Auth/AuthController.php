@@ -103,5 +103,56 @@ class AuthController extends \Core\Controller
         }
     }
 
+    public function updateUserInfo()
+    {
+        //$this->response->renderOk($this->response::HTTP_OK, "User data updated successfully");
+        
+        $validator = new Validator;
+        $authModel = new AuthModel();
+
+        $input = $this->request->getInput();
+
+        // make it
+        $validation = $validator->make($input, [
+            'email'      => 'required|email'
+        ]);
+
+        // then validate
+        $validation->validate();
+
+        if($validation->fails())
+        {
+            // handling errors
+            $errors = $validation->errors();
+            $this->response->renderErrors($this->response::HTTP_BAD_REQUEST, $errors->firstOfAll());
+        }
+        
+        $authModel = new AuthModel();
+        $user =  $authModel->findByEmail($input["email"]);
+        //$this->response->renderOk($this->response::HTTP_OK, [$user["password"], $input["old_password"]]);
+        
+        if($user)
+        {
+            $x = $authModel->update($input);
+            //$this->response->renderOk($this->response::HTTP_OK, $x);
+            /*
+            if($user){
+                $this->response->renderOk($this->response::HTTP_OK, "User data updated successfully");
+            }
+
+            else    
+            {
+                $this->response->renderFail($this->response::HTTP_BAD_REQUEST, "Invalid update data provided.");
+            }
+            */
+        }
+        else
+        {
+            $this->response->renderFail($this->response::HTTP_BAD_REQUEST, "Invalid Update data provided.");
+        }
+        
+        
+    }
+
 
 }

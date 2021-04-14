@@ -24,5 +24,7 @@ class UserModel extends \Illuminate\Database\Eloquent\Model
 		$columns = ["users.is_active" => 1];
 		return UserModel::where("users.id", "=", $_id)->update($columns);
 	}
+
+	
     
 }

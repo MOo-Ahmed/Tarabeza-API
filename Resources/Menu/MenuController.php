@@ -14,4 +14,20 @@ class MenuController extends \Core\Controller
     	$this->response->renderOk($this->response::HTTP_OK, "Here are the recommendations");
     }
 	
+	public function index($_id){
+		$model = new MenuModel();
+		$menu["restaurant_id"] = $_id;
+		$menu["items"] = $model->findItemsByRestaurantId($_id);
+		
+		if($menu)
+		{
+			$this->response->renderOk($this->response::HTTP_OK, $menu);
+		}
+		else
+		{
+			$this->response->renderFail($this->response::HTTP_NOT_FOUND, "No menu items found.");
+		}
+		
+	}
+	
 }

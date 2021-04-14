@@ -82,6 +82,7 @@ $capsule->bootEloquent();
         // auth
         $router->post("/auth/me", ['controller' => 'Auth\\AuthController', 'action' => 'authMe']);
         $router->post("/auth/register", ['controller' => 'Auth\\AuthController', 'action' => 'register']);
+        $router->post("/auth/update_me", ['controller' => 'Auth\\AuthController', 'action' => 'updateUserInfo']);
 
         // users
         $router->get("/users/me", ['controller' => 'User\\UserController', 'action' => 'me'])
@@ -94,7 +95,9 @@ $capsule->bootEloquent();
         $router->post("/users/check_confirmation_code", 
                     ['controller' => 'User\\UserController', 'action' => 'checkConfirmationCode'])
                 ->middleware(["admin", "customer", "restaurant_manager", "staff"]);        
-
+        
+        $router->post("/reviews", ['controller' => 'Review\\ReviewController', 'action' => 'postCustomerReview']);
+        
         // ------------------------------------------------------------
         $router->get("/search", ['controller' => 'Search\\SearchController', 'action' => 'index']);
 
@@ -113,7 +116,11 @@ $capsule->bootEloquent();
         
 
 		//------------------------------------------------------------
-		$router->get("/menu", ['controller' => 'Menu\\MenuController', 'action' => 'recommendItems']);
+		$router->get("/menu/([0-9]+)", ['controller' => 'Menu\\MenuController', 'action' => 'index']);
+        $router->get("/menu/recommend", ['controller' => 'Menu\\MenuController', 'action' => 'recommendItems']);
+        
+
+
         // Resolve
         $router->resolve();
 

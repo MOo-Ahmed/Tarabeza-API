@@ -19,8 +19,21 @@ class AuthModel extends \Illuminate\Database\Eloquent\Model
     return $res;
   }
 
+  public function findByID($_id)
+  {
+    $res = AuthModel::where("users.id", "=", $_id)->first();
+
+    return $res;
+  }
+
   public function insert($_input)
   {
     return AuthModel::create($_input);
   }
+
+  public function update($_input)
+  {
+    return AuthModel::save($_input);
+  }
+
 }

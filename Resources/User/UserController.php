@@ -132,4 +132,6 @@ class UserController extends \Core\Controller
 			$this->response->renderFail($this->response::HTTP_NOT_FOUND, "Could not find user for specified ID.");
 		}
 	}
+
+	
 }

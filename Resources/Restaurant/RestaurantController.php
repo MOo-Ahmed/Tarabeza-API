@@ -15,7 +15,7 @@ class RestaurantController extends \Core\Controller
 	{
 		$model = new RestaurantModel();
 		$restaurant["restaurant_data"] = $model->findById($_id);
-		$restaurant["items"] = $model->findItemsByRestaurantId($_id);
+		//$restaurant["items"] = $model->findItemsByRestaurantId($_id);
 		if($restaurant)
 		{
 			$this->response->renderOk($this->response::HTTP_OK, $restaurant);
