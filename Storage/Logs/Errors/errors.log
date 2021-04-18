@@ -2766,3 +2766,22 @@ Stack trace:
 #4 D:\XAMPP\htdocs\api\vendor\illuminate\database\Connection.php(424): Illuminate\Database\Connection->statement()
 #5 D:\XAMPP\htdocs\api\vendor\illuminate\database\Query\Processors\Processor.php(32): Illuminate\Database\Connection->insert()
 #6 D:\XAMPP\htdocs\api\vendor\illuminate\database\Query\Builder.php(2882): Illuminate\Database\Query\Processors\Processor->processInsertGetId in D:\XAMPP\htdocs\api\vendor\illuminate\database\Connection.php on line 678
+[18-Apr-2021 15:43:03 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'updated_at' in 'field list' in D:\XAMPP\htdocs\api\vendor\illuminate\database\Connection.php:465
+Stack trace:
+#0 D:\XAMPP\htdocs\api\vendor\illuminate\database\Connection.php(465): PDO->prepare()
+#1 D:\XAMPP\htdocs\api\vendor\illuminate\database\Connection.php(671): Illuminate\Database\Connection->Illuminate\Database\{closure}()
+#2 D:\XAMPP\htdocs\api\vendor\illuminate\database\Connection.php(638): Illuminate\Database\Connection->runQueryCallback()
+#3 D:\XAMPP\htdocs\api\vendor\illuminate\database\Connection.php(472): Illuminate\Database\Connection->run()
+#4 D:\XAMPP\htdocs\api\vendor\illuminate\database\Connection.php(424): Illuminate\Database\Connection->statement()
+#5 D:\XAMPP\htdocs\api\vendor\illuminate\database\Query\Processors\Processor.php(32): Illuminate\Database\Connection->insert()
+#6 D:\XAMPP\htdocs\api\vendor\illuminate\database\Query\Builder.php(2882): Illuminate\Database\Query\Processors\Processor->processInsertGetId in D:\XAMPP\htdocs\api\vendor\illuminate\database\Connection.php on line 678
+[18-Apr-2021 16:03:58 UTC] PHP Warning:  Declaration of Resources\Auth\AuthModel::update($_input) should be compatible with Illuminate\Database\Eloquent\Model::update(array $attributes = Array, array $options = Array) in D:\XAMPP\htdocs\api\Resources\Auth\AuthModel.php on line 34
+[18-Apr-2021 16:06:05 UTC] PHP Warning:  Declaration of Resources\Auth\AuthModel::update($_input) should be compatible with Illuminate\Database\Eloquent\Model::update(array $attributes = Array, array $options = Array) in D:\XAMPP\htdocs\api\Resources\Auth\AuthModel.php on line 34
+[18-Apr-2021 16:06:05 UTC] PHP Fatal error:  Allowed memory size of 134217728 bytes exhausted (tried to allocate 262144 bytes) in D:\XAMPP\htdocs\api\Resources\Auth\AuthModel.php on line 36
+[18-Apr-2021 16:08:23 UTC] PHP Warning:  Declaration of Resources\Auth\AuthModel::update($_input) should be compatible with Illuminate\Database\Eloquent\Model::update(array $attributes = Array, array $options = Array) in D:\XAMPP\htdocs\api\Resources\Auth\AuthModel.php on line 34
+[18-Apr-2021 16:08:23 UTC] PHP Fatal error:  Allowed memory size of 134217728 bytes exhausted (tried to allocate 262144 bytes) in D:\XAMPP\htdocs\api\Resources\Auth\AuthModel.php on line 36
+[18-Apr-2021 16:20:09 UTC] PHP Warning:  Declaration of Resources\Auth\AuthModel::update($_input) should be compatible with Illuminate\Database\Eloquent\Model::update(array $attributes = Array, array $options = Array) in D:\XAMPP\htdocs\api\Resources\Auth\AuthModel.php on line 34
+[18-Apr-2021 16:20:10 UTC] PHP Fatal error:  Allowed memory size of 134217728 bytes exhausted (tried to allocate 262144 bytes) in D:\XAMPP\htdocs\api\Resources\Auth\AuthModel.php on line 36
+[18-Apr-2021 16:22:34 UTC] PHP Parse error:  syntax error, unexpected '::' (T_PAAMAYIM_NEKUDOTAYIM) in D:\XAMPP\htdocs\api\Resources\Auth\AuthModel.php on line 36
+[18-Apr-2021 16:39:20 UTC] PHP Notice:  Undefined variable: input in D:\XAMPP\htdocs\api\Resources\Auth\AuthModel.php on line 36
+[18-Apr-2021 16:39:20 UTC] PHP Notice:  Trying to access array offset on value of type null in D:\XAMPP\htdocs\api\Resources\Auth\AuthModel.php on line 36

@@ -31,9 +31,9 @@ class AuthModel extends \Illuminate\Database\Eloquent\Model
     return AuthModel::create($_input);
   }
 
-  public function update($_input)
+  public function upd($_input)
   {
-    return AuthModel::save($_input);
+    return AuthModel::where("users.id", "=", $_input['id'])->update($_input);
   }
 
 }

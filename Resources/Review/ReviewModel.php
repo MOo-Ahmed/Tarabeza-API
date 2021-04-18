@@ -10,7 +10,7 @@ class ReviewModel extends \Illuminate\Database\Eloquent\Model
 {
   public $table = "reviews";
   protected $fillable = ['customer_id', "restaurant_id", "comment", "rate"];
-  protected $hidden = array("created_at");
+  protected $hidden = array("created_at", "updated_at");
 
   
 

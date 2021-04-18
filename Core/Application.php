@@ -96,7 +96,7 @@ $capsule->bootEloquent();
                     ['controller' => 'User\\UserController', 'action' => 'checkConfirmationCode'])
                 ->middleware(["admin", "customer", "restaurant_manager", "staff"]);        
         
-        $router->post("/reviews", ['controller' => 'Review\\ReviewController', 'action' => 'postCustomerReview']);
+        $router->post("/reviews/add", ['controller' => 'Review\\ReviewController', 'action' => 'postCustomerReview']);
         
         // ------------------------------------------------------------
         $router->get("/search", ['controller' => 'Search\\SearchController', 'action' => 'index']);

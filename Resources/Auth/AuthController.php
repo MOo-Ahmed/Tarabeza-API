@@ -105,7 +105,6 @@ class AuthController extends \Core\Controller
 
     public function updateUserInfo()
     {
-        //$this->response->renderOk($this->response::HTTP_OK, "User data updated successfully");
         
         $validator = new Validator;
         $authModel = new AuthModel();
@@ -114,7 +113,15 @@ class AuthController extends \Core\Controller
 
         // make it
         $validation = $validator->make($input, [
-            'email'      => 'required|email'
+            'id'                    => 'required|numeric',
+            'email'                 => 'required|email',
+            "phone_number"          => "required|numeric",
+            'password'              => 'required|min:8|max:255',
+            "first_name"            => "required|min:3|max:255",
+            "last_name"             => "required|min:3|max:255",
+            "gender"                => "required|in:male,female",
+            "date_of_birth"         => "required|date",
+            "role"                  => "required|in:customer,staff,restaurant_manager"
         ]);
 
         // then validate
@@ -128,15 +135,12 @@ class AuthController extends \Core\Controller
         }
         
         $authModel = new AuthModel();
-        $user =  $authModel->findByEmail($input["email"]);
-        //$this->response->renderOk($this->response::HTTP_OK, [$user["password"], $input["old_password"]]);
+        $user =  $authModel->findByID($input["id"]);
         
         if($user)
         {
-            $x = $authModel->update($input);
-            //$this->response->renderOk($this->response::HTTP_OK, $x);
-            /*
-            if($user){
+            $x = $authModel->upd($input);
+            if($x){
                 $this->response->renderOk($this->response::HTTP_OK, "User data updated successfully");
             }
 
@@ -144,11 +148,10 @@ class AuthController extends \Core\Controller
             {
                 $this->response->renderFail($this->response::HTTP_BAD_REQUEST, "Invalid update data provided.");
             }
-            */
         }
         else
         {
-            $this->response->renderFail($this->response::HTTP_BAD_REQUEST, "Invalid Update data provided.");
+            $this->response->renderFail($this->response::HTTP_BAD_REQUEST, "Can't find the user specified.");
         }
         
         

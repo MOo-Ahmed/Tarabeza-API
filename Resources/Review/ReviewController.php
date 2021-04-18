@@ -32,8 +32,6 @@ class ReviewController extends \Core\Controller
         }        
       
         $review = $reviewModel->insert($input);
-          /*
-        echo "Got there" ;
         if($review)
         {
 
@@ -43,7 +41,7 @@ class ReviewController extends \Core\Controller
         {
             $this->response->renderFail($this->response::HTTP_BAD_REQUEST, "Invalid data provided.");
         }
-        */
+        
         
 	}
 	
