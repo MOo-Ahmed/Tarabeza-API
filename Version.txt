@@ -1,7 +1,8 @@
 Till this version, we have finished :
 - Sign up, 
 - Search for rest
-- Update user info (not working)
-- Make review (not working)
+- Update user info 
+- Make review
 - View menu
+- Make order
 - Recommend items and restaurants (not integrated)

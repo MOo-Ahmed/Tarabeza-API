@@ -2785,3 +2785,12 @@ Stack trace:
 [18-Apr-2021 16:22:34 UTC] PHP Parse error:  syntax error, unexpected '::' (T_PAAMAYIM_NEKUDOTAYIM) in D:\XAMPP\htdocs\api\Resources\Auth\AuthModel.php on line 36
 [18-Apr-2021 16:39:20 UTC] PHP Notice:  Undefined variable: input in D:\XAMPP\htdocs\api\Resources\Auth\AuthModel.php on line 36
 [18-Apr-2021 16:39:20 UTC] PHP Notice:  Trying to access array offset on value of type null in D:\XAMPP\htdocs\api\Resources\Auth\AuthModel.php on line 36
+[20-Apr-2021 08:48:18 UTC] PHP Notice:  Undefined variable: OrderModel in D:\XAMPP\htdocs\api\Resources\Order\OrderController.php on line 34
+[20-Apr-2021 08:48:18 UTC] PHP Fatal error:  Uncaught Error: Call to a member function insertOrder() on null in D:\XAMPP\htdocs\api\Resources\Order\OrderController.php:34
+Stack trace:
+#0 [internal function]: Resources\Order\OrderController->makeOrder()
+#1 D:\XAMPP\htdocs\api\Core\Router.php(170): call_user_func_array()
+#2 D:\XAMPP\htdocs\api\Core\Application.php(128): Core\Router->resolve()
+#3 D:\XAMPP\htdocs\api\index.php(33): Core\Application::run()
+#4 {main}
+  thrown in D:\XAMPP\htdocs\api\Resources\Order\OrderController.php on line 34

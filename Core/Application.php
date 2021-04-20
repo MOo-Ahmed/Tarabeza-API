@@ -119,7 +119,10 @@ $capsule->bootEloquent();
 		$router->get("/menu/([0-9]+)", ['controller' => 'Menu\\MenuController', 'action' => 'index']);
         $router->get("/menu/recommend", ['controller' => 'Menu\\MenuController', 'action' => 'recommendItems']);
         
-
+        //------------------------------------------------------------
+        $router->post("/orders/make", ['controller' => 'Order\\OrderController', 'action' => 'makeOrder']);
+        $router->post("/orders/finish", ['controller' => 'Order\\OrderController', 'action' => 'finishOrder']);
+        $router->post("/orders/paid", ['controller' => 'Order\\OrderController', 'action' => 'confirmPayOrder']);
 
         // Resolve
         $router->resolve();
