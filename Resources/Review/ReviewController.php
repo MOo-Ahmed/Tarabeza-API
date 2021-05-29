@@ -15,7 +15,7 @@ class ReviewController extends \Core\Controller
         
         // make it
         $validation = $validator->make($input, [
-            'customer_id'           => 'required|numeric',
+            'customer_name'         => 'required|min:3',
             "restaurant_id"         => "required|numeric",
             'comment'              	=> 'required|min:4|max:255',
             "rate"            	    => "required|numeric"
@@ -43,6 +43,23 @@ class ReviewController extends \Core\Controller
         }
         
         
-	}
+    }
+    
+    public function index($_id){
+           
+        $restaurant_id = $_id;
+        $model = new ReviewModel();
+		$reviews["restaurant_reviews"] = $model->findById($restaurant_id);
+		
+		if($reviews)
+		{
+			$this->response->renderOk($this->response::HTTP_OK, $reviews);
+		}
+		else
+		{
+			$this->response->renderFail($this->response::HTTP_NOT_FOUND, "No reviews found.");
+		}
+		
+    }
 	
 }

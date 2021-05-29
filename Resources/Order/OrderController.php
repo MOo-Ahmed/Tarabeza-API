@@ -6,7 +6,7 @@ use Rakit\Validation\Validator;
 class OrderController extends \Core\Controller
 {
 
-	public function makeOrder()
+	public function create()
     {
     	
         $validator = new Validator;
@@ -109,6 +109,14 @@ class OrderController extends \Core\Controller
         {
             $this->response->renderFail($this->response::HTTP_BAD_REQUEST, "Invalid data provided.");
         }
+    }
+
+    public function showCustomer($user_id){
+
+    }
+
+    public function showRestaurant($restaurant_id){
+
     }
 	
 }

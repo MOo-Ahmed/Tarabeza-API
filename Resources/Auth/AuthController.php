@@ -137,7 +137,7 @@ class AuthController extends \Core\Controller
         $authModel = new AuthModel();
         $user =  $authModel->findByID($input["id"]);
         
-        if($user)
+        if($user && $input["password"] == $user["password"])
         {
             $x = $authModel->upd($input);
             if($x){

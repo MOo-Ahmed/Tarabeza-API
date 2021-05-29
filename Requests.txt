@@ -1,0 +1,60 @@
+Request for update user info
+
+/auth/update_me
+
+{
+	"id":46,
+	"email":"aa@gmail.com",
+	"phone_number" : "01110685449",
+	"password" : "mynewpass",
+	"role" : "customer",
+	"gender" : "male",
+	"first_name" : "Mohamed",
+	"last_name" : "Ahmed Abdelnabey",
+	"date_of_birth" : "1999-11-11"
+}
+
+---------------------------------------------
+
+Request for make review
+/reviews/add
+{
+	"customer_id":46,
+	"customer_name":'fdfdfd',
+	"restaurant_id":5,
+	"comment":"Nice restaurant bro",
+	"rate":4
+}
+---------------------------------------------
+
+Request for make order - at first
+/orders/make
+
+{
+	"customer_id" : x,
+	"restaurant_id": x,
+	"table_id": x,
+	"items" : 
+	[
+		{"meal_id" : x1, "quantity" : x1,  "comment" : "Lorem ipsum", "total" : x1},
+		{"meal_id" : x2, "quantity" : x2,  "comment" : "Lorem ipsum", "total" : x2},
+		{"meal_id" : x3, "quantity" : x3,  "comment" : "Lorem ipsum", "total" : x3}
+	]
+}
+
+Then to confirm finishing :
+/orders/finish
+
+{ 
+	"order_id" : x
+}
+
+Then to confirm payment :
+/orders/paid
+
+{
+	"order_id" : x
+}
+
+------------------------------------------------
+

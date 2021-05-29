@@ -33,7 +33,7 @@ class Router
      * @param array $_routes
      * @throws Exception
      */
-    public function __construct($_basePath = '', $_request, $_response)
+    public function __construct($_basePath, $_request, $_response)
     {
         $this->basePath = $_basePath;
         $this->request = $_request;

@@ -1,0 +1,14 @@
+- request for all tables
+- request to get the available tables
+- request for all non-finished orders
+- another one for changing the state of table
+- request for all orders
+
+- request to add customer interaction
+- request for dashboard :
+	total revenue of the rest
+	number of orders on the day
+	Most ordered dishes
+	Most corwded time of the day 
+----------------------------------------
+

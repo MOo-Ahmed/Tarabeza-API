@@ -97,7 +97,8 @@ $capsule->bootEloquent();
                 ->middleware(["admin", "customer", "restaurant_manager", "staff"]);        
         
         $router->post("/reviews/add", ['controller' => 'Review\\ReviewController', 'action' => 'postCustomerReview']);
-        
+        $router->get("/reviews/([0-9]+)", ['controller' => 'Review\\ReviewController', 'action' => 'index']);
+
         // ------------------------------------------------------------
         $router->get("/search", ['controller' => 'Search\\SearchController', 'action' => 'index']);
 
@@ -120,9 +121,12 @@ $capsule->bootEloquent();
         $router->get("/menu/recommend", ['controller' => 'Menu\\MenuController', 'action' => 'recommendItems']);
         
         //------------------------------------------------------------
-        $router->post("/orders/make", ['controller' => 'Order\\OrderController', 'action' => 'makeOrder']);
+        $router->post("/orders/make", ['controller' => 'Order\\OrderController', 'action' => 'create']);
         $router->post("/orders/finish", ['controller' => 'Order\\OrderController', 'action' => 'finishOrder']);
         $router->post("/orders/paid", ['controller' => 'Order\\OrderController', 'action' => 'confirmPayOrder']);
+        $router->get("/orders/customer/([0-9]+)", ['controller' => 'Order\\OrderController', 'action' => 'showCustomer']);
+        $router->get("/orders/restaurant/([0-9]+)", ['controller' => 'Order\\OrderController', 'action' => 'showRestaurant']);
+
 
         // Resolve
         $router->resolve();
