@@ -25,5 +25,9 @@ class RestaurantController extends \Core\Controller
 			$this->response->renderFail($this->response::HTTP_NOT_FOUND, "No restaurant found.");
 		}
 	}
+
+	public function allTables($_id){
+		
+	}
 	
 }

@@ -36,4 +36,9 @@ class AuthModel extends \Illuminate\Database\Eloquent\Model
     return AuthModel::where("users.id", "=", $_input['id'])->update($_input);
   }
 
+  public function updatePassword($_input){
+    return AuthModel::where("users.id", "=", $_input['id'])
+                    ->update(array('password' => $_input['new_password']));
+  }
+
 }

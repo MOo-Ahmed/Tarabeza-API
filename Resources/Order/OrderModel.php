@@ -9,11 +9,14 @@ use Illuminate\Container\Container;
 class OrderModel extends \Illuminate\Database\Eloquent\Model
 {
   
-	public function insertOrder($_input)
-    {
+	public function create($_input)
+    {				
 		//First insert the order
-		$res = Capsule::table('orders')->insertGetId(array('customer_id' => $_input['customer_id'],
-		 'restaurant_id' => $_input['restaurant_id'], 'table_id' => $_input['table_id']));
+		$res = Capsule::table('orders')->insertGetId(array(
+			'customer_id' 	=> $_input['customer_id'],
+			'restaurant_id' => $_input['restaurant_id'], 
+			'table_number' 	=> $_input['table_number'],
+		 	'table_id' 		=> $_input['table_id']));
 		
 		//Get the length of the items array
 		$numOfItems = count($_input['items']);
@@ -25,7 +28,7 @@ class OrderModel extends \Illuminate\Database\Eloquent\Model
 				'comment' => $_input['items'][$i]['comment'], 'total' => $_input['items'][$i]['total']));
         }
 		
-		 return $res;
+		return $res;
 	}
 
 	public function finish($_input)
@@ -36,12 +39,35 @@ class OrderModel extends \Illuminate\Database\Eloquent\Model
 		return $res;
   	}
 
-	  public function pay($_input)
+	public function approve($_input)
   	{
 		$res = Capsule::table('orders')->where('id', '=', $_input['order_id'])
-			->update(array('is_paid' => 1));
+			->update(array('is_approved' => 1));
 
 		return $res;
-  	}
+	}
+	  
+	public function cancel($_input)
+  	{
+		$res = Capsule::table('orders')->where('id', '=', $_input['order_id'])
+			->update(array('is_deleted' => 1));
+
+		return $res;
+	}
+
+	public function getNonFinished($selector, $id){
+		
+		$res = Capsule::table('orders')->select('orders.*', 'items.name as item_name',
+								'order_details.quantity as qty', 
+								'order_details.total as total')
+				->where('orders.is_finished', '=', 0)
+				->where($selector, '=', $id)
+				->join('order_details', 'orders.id', '=', 'order_details.order_id')
+				->join('items', 'order_details.meal_id', '=', 'items.id')
+                ->get();
+            
+        return $res;
+	}  
+
 	
 }

@@ -6,7 +6,7 @@ use Rakit\Validation\Validator;
 class OrderController extends \Core\Controller
 {
 
-	public function create()
+	public function insertOrder()
     {
     	
         $validator = new Validator;
@@ -16,9 +16,10 @@ class OrderController extends \Core\Controller
         
         // make it
         $validation = $validator->make($input, [
-            'customer_id'           => 'required|numeric',
-            "restaurant_id"         => "required|numeric",
-            'table_id'              => 'required|numeric'
+            'customer_id'      => 'required|numeric',
+            'restaurant_id'    => 'required|numeric',
+            'table_number'     => 'required|numeric',
+            'table_id'         => 'required|numeric'
         ]);
 
         // then validate
@@ -31,7 +32,7 @@ class OrderController extends \Core\Controller
             $this->response->renderErrors($this->response::HTTP_BAD_REQUEST, $errors->firstOfAll());
         }        
       
-        $order = $orderModel->insertOrder($input);
+        $order = $orderModel->create($input);
         if($order)
         {
 
@@ -77,7 +78,7 @@ class OrderController extends \Core\Controller
         }
     }
 
-    public function confirmPayOrder(){
+    public function approveOrder(){
         
         $validator = new Validator;
         $orderModel = new OrderModel();
@@ -99,11 +100,11 @@ class OrderController extends \Core\Controller
             $this->response->renderErrors($this->response::HTTP_BAD_REQUEST, $errors->firstOfAll());
         }        
       
-        $order = $orderModel->pay($input);
+        $order = $orderModel->approve($input);
         if($order)
         {
 
-            $this->response->renderOk($this->response::HTTP_CREATED, 'Successfully marked as paid');
+            $this->response->renderOk($this->response::HTTP_CREATED, 'Successfully approved');
         }
         else
         {
@@ -111,12 +112,51 @@ class OrderController extends \Core\Controller
         }
     }
 
-    public function showCustomer($user_id){
+    public function cancelOrder(){
+        
+        $validator = new Validator;
+        $orderModel = new OrderModel();
+        
+        $input = $this->request->getInput();
+        
+        // make it
+        $validation = $validator->make($input, [
+            'order_id'           => 'required|numeric'
+        ]);
 
+        // then validate
+        $validation->validate();
+
+        if($validation->fails())
+        {
+            // handling errors
+            $errors = $validation->errors();
+            $this->response->renderErrors($this->response::HTTP_BAD_REQUEST, $errors->firstOfAll());
+        }        
+      
+        $order = $orderModel->cancel($input);
+        if($order)
+        {
+
+            $this->response->renderOk($this->response::HTTP_CREATED, 'Successfully cancelled');
+        }
+        else
+        {
+            $this->response->renderFail($this->response::HTTP_BAD_REQUEST, "Invalid data provided.");
+        }
+    }
+    
+    public function getRestaurantNonFinishedOrders($_id){
+        $model = new OrderModel();
+        $selector = 'orders.restaurant_id' ;
+        $orders = $model->getNonFinished($selector, $_id);
+        if($orders)  $this->response->renderOk($this->response::HTTP_OK, $orders);
     }
 
-    public function showRestaurant($restaurant_id){
-
+    public function getCustomerNonFinishedOrders($_id){
+        $model = new OrderModel();
+        $selector = 'orders.customer_id' ;
+        $orders = $model->getNonFinished($selector, $_id);
+        if($orders)  $this->response->renderOk($this->response::HTTP_OK, $orders);
     }
-	
 }

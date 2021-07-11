@@ -16,15 +16,4 @@ class RestaurantModel extends \Illuminate\Database\Eloquent\Model
 		return $res;
     }
 
-    public function findItemsByRestaurantId($_id)
-    {
-    	$res = Capsule::table('items')->select('items.*', 'categories.name as category_name')
-		    	->join('categories', 'items.category_id', '=', 'categories.id')
-		    	->where('items.restaurant_id', '=', $_id)
-		    	->get();
-    	
-
-		
-		return $res;
-    }
 }

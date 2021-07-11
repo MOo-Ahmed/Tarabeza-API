@@ -33,7 +33,8 @@ Request for make order - at first
 {
 	"customer_id" : x,
 	"restaurant_id": x,
-	"table_id": x,
+	"table_number": x,
+	"table_id" : x,
 	"items" : 
 	[
 		{"meal_id" : x1, "quantity" : x1,  "comment" : "Lorem ipsum", "total" : x1},

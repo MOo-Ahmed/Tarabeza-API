@@ -157,5 +157,51 @@ class AuthController extends \Core\Controller
         
     }
 
+    public function updatePassword()
+    {
+        
+        $validator = new Validator;
+        $authModel = new AuthModel();
 
+        $input = $this->request->getInput();
+
+        // make it
+        $validation = $validator->make($input, [
+            'id'                    => 'required|numeric',
+            'password'              => 'required|min:8|max:255',
+            'new_password'          => 'required|min:8|max:255'
+        ]);
+
+        // then validate
+        $validation->validate();
+
+        if($validation->fails())
+        {
+            // handling errors
+            $errors = $validation->errors();
+            $this->response->renderErrors($this->response::HTTP_BAD_REQUEST, $errors->firstOfAll());
+        }
+        
+        $authModel = new AuthModel();
+        $user =  $authModel->findByID($input["id"]);
+        
+        if($user && $input["password"] == $user["password"])
+        {
+            $x = $authModel->updatePassword($input);
+            if($x){
+                $this->response->renderOk($this->response::HTTP_OK, "User password updated successfully");
+            }
+
+            else    
+            {
+                $this->response->renderFail($this->response::HTTP_BAD_REQUEST, "Invalid passowrd provided.");
+            }
+        }
+        else
+        {
+            $this->response->renderFail($this->response::HTTP_BAD_REQUEST, "Can't find the user specified " . $user["password"]);
+        }
+        
+        
+    }
 }

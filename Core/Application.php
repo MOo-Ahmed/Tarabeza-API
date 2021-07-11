@@ -83,6 +83,8 @@ $capsule->bootEloquent();
         $router->post("/auth/me", ['controller' => 'Auth\\AuthController', 'action' => 'authMe']);
         $router->post("/auth/register", ['controller' => 'Auth\\AuthController', 'action' => 'register']);
         $router->post("/auth/update_me", ['controller' => 'Auth\\AuthController', 'action' => 'updateUserInfo']);
+        $router->post("/auth/update_pass", ['controller' => 'Auth\\AuthController', 'action' => 'updatePassword']);
+        
 
         // users
         $router->get("/users/me", ['controller' => 'User\\UserController', 'action' => 'me'])
@@ -114,19 +116,27 @@ $capsule->bootEloquent();
         // ------------------------------------------------------------
         $router->get("/restaurants", ['controller' => 'Restaurant\\RestaurantController', 'action' => 'index']);
         $router->get("/restaurants/([0-9]+)", ['controller' => 'Restaurant\\RestaurantController', 'action' => 'show']);
-        
 
 		//------------------------------------------------------------
 		$router->get("/menu/([0-9]+)", ['controller' => 'Menu\\MenuController', 'action' => 'index']);
         $router->get("/menu/recommend", ['controller' => 'Menu\\MenuController', 'action' => 'recommendItems']);
         
         //------------------------------------------------------------
-        $router->post("/orders/make", ['controller' => 'Order\\OrderController', 'action' => 'create']);
+        $router->post("/orders/make", ['controller' => 'Order\\OrderController', 'action' => 'insertOrder']);
         $router->post("/orders/finish", ['controller' => 'Order\\OrderController', 'action' => 'finishOrder']);
-        $router->post("/orders/paid", ['controller' => 'Order\\OrderController', 'action' => 'confirmPayOrder']);
-        $router->get("/orders/customer/([0-9]+)", ['controller' => 'Order\\OrderController', 'action' => 'showCustomer']);
-        $router->get("/orders/restaurant/([0-9]+)", ['controller' => 'Order\\OrderController', 'action' => 'showRestaurant']);
+        $router->post("/orders/approve", ['controller' => 'Order\\OrderController', 'action' => 'approveOrder']);
+        $router->post("/orders/cancel", ['controller' => 'Order\\OrderController', 'action' => 'cancelOrder']);
+        $router->get("/orders/rest_not_finished/([0-9]+)", ['controller' => 'Order\\OrderController', 'action' => 'getRestaurantNonFinishedOrders']);
+        $router->get("/orders/cust_not_finished/([0-9]+)", ['controller' => 'Order\\OrderController', 'action' => 'getCustomerNonFinishedOrders']);
 
+   
+        //$router->get("/orders/customer/([0-9]+)", ['controller' => 'Order\\OrderController', 'action' => 'showCustomer']);
+        //$router->get("/orders/restaurant/([0-9]+)", ['controller' => 'Order\\OrderController', 'action' => 'showRestaurant']);
+
+        //------------------------------------------------------------
+        $router->get("/tables/([0-9]+)", ['controller' => 'Table\\TableController', 'action' => 'index']);
+        $router->get("/tables/release/([0-9]+)/([0-9]+)", ['controller' => 'Table\\TableController', 'action' => 'release']);
+        $router->get("/tables/hold/([0-9]+)/([0-9]+)", ['controller' => 'Table\\TableController', 'action' => 'hold']);
 
         // Resolve
         $router->resolve();

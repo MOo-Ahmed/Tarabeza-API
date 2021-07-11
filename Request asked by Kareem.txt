@@ -1,14 +1,20 @@
 - request for all tables
-- request to get the available tables
+- request to release table
+- request to occupy table
+- request to cancel order
+- request to approve order
+- request with old and new pass
 - request for all non-finished orders
-- another one for changing the state of table
-- request for all orders
+- request for customer's current orders
 
+################
+
+- request to get the available tables (non reserved)
+- request for staff signup
 - request to add customer interaction
 - request for dashboard :
-	total revenue of the rest
-	number of orders on the day
+	Total revenue of the rest
+	Number of orders on the day
 	Most ordered dishes
-	Most corwded time of the day 
-----------------------------------------
-
+	Most crowded time of the day 
+---------------------------------------------------
