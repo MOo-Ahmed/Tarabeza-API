@@ -43,7 +43,7 @@ class OrderController extends \Core\Controller
             $this->response->renderFail($this->response::HTTP_BAD_REQUEST, "Invalid data provided.");
         }
     }
-    
+
     public function finishOrder(){
         
         $validator = new Validator;
@@ -147,16 +147,44 @@ class OrderController extends \Core\Controller
     }
     
     public function getRestaurantNonFinishedOrders($_id){
+        if(is_numeric($_id) != true){
+            $this->response->renderFail($this->response::HTTP_BAD_REQUEST, "Invalid data provided.");
+        } 
+
         $model = new OrderModel();
         $selector = 'orders.restaurant_id' ;
         $orders = $model->getNonFinished($selector, $_id);
-        if($orders)  $this->response->renderOk($this->response::HTTP_OK, $orders);
+        if ($orders) {
+            $this->response->renderOk($this->response::HTTP_OK, $orders);
+        }
+        else
+        {
+            $this->response->renderFail($this->response::HTTP_NOT_FOUND, "No data found.");
+        }
     }
 
     public function getCustomerNonFinishedOrders($_id){
+        if(is_numeric($_id) != true){
+            $this->response->renderFail($this->response::HTTP_BAD_REQUEST, "Invalid data provided.");
+        } 
         $model = new OrderModel();
         $selector = 'orders.customer_id' ;
         $orders = $model->getNonFinished($selector, $_id);
-        if($orders)  $this->response->renderOk($this->response::HTTP_OK, $orders);
+        if ($orders) {
+            $this->response->renderOk($this->response::HTTP_OK, $orders);
+        }
+        else
+        {
+            $this->response->renderFail($this->response::HTTP_NOT_FOUND, "No data found.");
+        }
+    }
+
+	public function dashboard($_id){
+        if(is_numeric($_id) != true){
+            $this->response->renderFail($this->response::HTTP_BAD_REQUEST, "Invalid data provided.");
+        }
+		$model = new OrderModel();
+        $stats = $model->dashboard($_id);
+        if($stats)  $this->response->renderOk($this->response::HTTP_OK, $stats);
     }
 }

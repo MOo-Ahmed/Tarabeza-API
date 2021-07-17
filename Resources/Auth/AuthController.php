@@ -55,7 +55,7 @@ class AuthController extends \Core\Controller
         // make it
         $validation = $validator->make($input, [
             'email'                 => 'required|email',
-            "phone_number"          => "required|numeric",
+            "phone_number"          => "required|min:5",
             'password'              => 'required|min:8|max:255',
             "first_name"            => "required|min:3|max:255",
             "last_name"             => "required|min:3|max:255",
@@ -77,14 +77,20 @@ class AuthController extends \Core\Controller
         $user = $authModel->findByEmail($input["email"]);
         if($user)
         {
-            $this->response->renderFail($this->response::HTTP_BAD_REQUEST, "Email is already exists.");
+            $this->response->renderFail($this->response::HTTP_BAD_REQUEST, "Email already exists.");
         }
 
         $input["password"] = password_hash($input["password"], PASSWORD_DEFAULT);
         $input["confirmation_code"] = \Core\Utilities\Helper::generateConfirmationCode();
 
-
-        $user = $authModel->insert($input);
+        if($input["role"] == "staff"){
+            $user = $authModel->insertStaff($input);
+        }
+        else{
+            $user = $authModel->insert($input);
+        }
+        //$this->response->renderOk($this->response::HTTP_CREATED, $user);
+        
         if($user)
         {
             //\Core\Utilities\Helper::sendMail($input["email"], "Thanks For Registering", "Code = " . $input["confirmation_code"]);
@@ -101,6 +107,7 @@ class AuthController extends \Core\Controller
         {
             $this->response->renderFail($this->response::HTTP_BAD_REQUEST, "Invalid data provided.");
         }
+        
     }
 
     public function updateUserInfo()

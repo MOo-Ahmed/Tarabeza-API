@@ -6,15 +6,26 @@
 - request with old and new pass
 - request for all non-finished orders
 - request for customer's current orders
-
-################
-
 - request to get the available tables (non reserved)
-- request for staff signup
 - request to add customer interaction
+
+- Get all restaurant tables
+- Toggle table state
+- Cancel/approve orders
+- Change password
+- Show restaurant's current orders
+- Show customer's current orders
+- Add customer's preferences
 - request for dashboard :
 	Total revenue of the rest
 	Number of orders on the day
 	Most ordered dishes
 	Most crowded time of the day 
+
+- request for staff signup
+
+################
+
+
+
 ---------------------------------------------------

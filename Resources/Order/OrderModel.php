@@ -26,8 +26,8 @@ class OrderModel extends \Illuminate\Database\Eloquent\Model
             Capsule::table('order_details')->insert(array('order_id' => $res,
 				'meal_id' => $_input['items'][$i]['meal_id'], 'quantity' => $_input['items'][$i]['quantity'],
 				'comment' => $_input['items'][$i]['comment'], 'total' => $_input['items'][$i]['total']));
-        }
-		
+		}
+				
 		return $res;
 	}
 
@@ -61,6 +61,7 @@ class OrderModel extends \Illuminate\Database\Eloquent\Model
 								'order_details.quantity as qty', 
 								'order_details.total as total')
 				->where('orders.is_finished', '=', 0)
+				->where('orders.is_deleted', '=', 0)
 				->where($selector, '=', $id)
 				->join('order_details', 'orders.id', '=', 'order_details.order_id')
 				->join('items', 'order_details.meal_id', '=', 'items.id')
@@ -69,5 +70,42 @@ class OrderModel extends \Illuminate\Database\Eloquent\Model
         return $res;
 	}  
 
-	
+	public function dashboard($_id){
+		$sql = "SELECT SUM(order_details.total) AS revenue, COUNT(order_details.id) AS orders
+		FROM order_details inner join orders 
+		ON orders.id = order_details.order_id 
+		where orders.restaurant_id = " . $_id . "
+		AND EXTRACT(DAY FROM CURRENT_TIMESTAMP) = EXTRACT(DAY FROM orders.created_at); " ;
+		$res = Capsule::select($sql);
+		$revenue = json_decode(json_encode($res), true)[0]['revenue'];
+		$count = json_decode(json_encode($res), true)[0]['orders'];
+		
+		$sql = "SELECT date_format(orders.created_at,'%H %p') as hour,
+			  COUNT(orders.id) as hourly_orders
+		FROM orders
+		WHERE orders.restaurant_id = " . $_id . "
+		AND EXTRACT(DAY FROM CURRENT_TIMESTAMP) = EXTRACT(DAY FROM orders.created_at)
+		GROUP BY date_format(orders.created_at,'%H %p')
+		order by hourly_orders desc LIMIT 4;  " ;
+
+		$topHours = Capsule::select($sql);
+
+		$sql = "SELECT order_details.meal_id AS item_id, items.name AS item_name,
+		COUNT(order_details.meal_id) AS count_orders
+		FROM order_details inner join orders 
+		ON order_details.order_id = orders.id
+		inner join items 
+		ON items.id = order_details.meal_id
+		where orders.restaurant_id = " . $_id . " 
+		AND EXTRACT(DAY FROM CURRENT_TIMESTAMP) = EXTRACT(DAY FROM orders.created_at)
+		group by item_id 
+		order by count_orders desc LIMIT 4;" ;
+
+		$topItems = Capsule::select($sql);
+
+		$stats = array("revenue" => $revenue, "count_orders" => $count,
+		"top_items" => $topItems, "top_hours" => $topHours);
+
+		return $stats;
+	}	
 }

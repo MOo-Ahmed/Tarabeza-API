@@ -25,6 +25,13 @@ class UserModel extends \Illuminate\Database\Eloquent\Model
 		return UserModel::where("users.id", "=", $_id)->update($columns);
 	}
 
+	public function addPreference($cust_id, $cat_id){
+		$res = Capsule::table('customers_preferences')->insertGetId(array(
+			'customer_id' 	=> $cust_id,
+			'category_id' 	=> $cat_id));
+		return $res ;
+	}
+
 	
     
 }

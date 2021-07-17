@@ -98,6 +98,8 @@ $capsule->bootEloquent();
                     ['controller' => 'User\\UserController', 'action' => 'checkConfirmationCode'])
                 ->middleware(["admin", "customer", "restaurant_manager", "staff"]);        
         
+        $router->post("/cust/pref/add", ['controller' => 'User\\UserController', 'action' => 'insertPreference']);
+        
         $router->post("/reviews/add", ['controller' => 'Review\\ReviewController', 'action' => 'postCustomerReview']);
         $router->get("/reviews/([0-9]+)", ['controller' => 'Review\\ReviewController', 'action' => 'index']);
 
@@ -116,6 +118,8 @@ $capsule->bootEloquent();
         // ------------------------------------------------------------
         $router->get("/restaurants", ['controller' => 'Restaurant\\RestaurantController', 'action' => 'index']);
         $router->get("/restaurants/([0-9]+)", ['controller' => 'Restaurant\\RestaurantController', 'action' => 'show']);
+        $router->get("/restaurants/dash/([0-9]+)", ['controller' => 'Order\\OrderController', 'action' => 'dashboard']);
+
 
 		//------------------------------------------------------------
 		$router->get("/menu/([0-9]+)", ['controller' => 'Menu\\MenuController', 'action' => 'index']);
@@ -137,6 +141,7 @@ $capsule->bootEloquent();
         $router->get("/tables/([0-9]+)", ['controller' => 'Table\\TableController', 'action' => 'index']);
         $router->get("/tables/release/([0-9]+)/([0-9]+)", ['controller' => 'Table\\TableController', 'action' => 'release']);
         $router->get("/tables/hold/([0-9]+)/([0-9]+)", ['controller' => 'Table\\TableController', 'action' => 'hold']);
+        $router->post("/tables/available", ['controller' => 'Table\\TableController', 'action' => 'getAvailable']);
 
         // Resolve
         $router->resolve();

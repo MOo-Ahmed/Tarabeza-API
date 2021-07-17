@@ -14,6 +14,6 @@ class RestaurantModel extends \Illuminate\Database\Eloquent\Model
     {
     	$res = RestaurantModel::where("id", "=", $_id)->limit(1)->get();
 		return $res;
-    }
+	}
 
 }

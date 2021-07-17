@@ -28,6 +28,41 @@ class UserController extends \Core\Controller
 		*/
 	}
 
+	public function insertPreference()
+    {
+    	
+        $validator = new Validator;
+        $model = new UserModel();
+        
+        $input = $this->request->getInput();
+        
+        // make it
+        $validation = $validator->make($input, [
+            'customer_id'      => 'required|numeric',
+            'category_id'       => 'required|numeric'
+        ]);
+
+        // then validate
+        $validation->validate();
+
+        if($validation->fails())
+        {
+            // handling errors
+            $errors = $validation->errors();
+            $this->response->renderErrors($this->response::HTTP_BAD_REQUEST, $errors->firstOfAll());
+        }        
+      
+        $record = $model->addPreference($input['customer_id'], $input['category_id']);
+        if($record)
+        {
+            $this->response->renderOk($this->response::HTTP_CREATED, $record);
+        }
+        else
+        {
+            $this->response->renderFail($this->response::HTTP_BAD_REQUEST, "Invalid data provided.");
+        }
+    }
+
 	// public function recovery()
 	// {
 	// 	$model = new UserModel();
