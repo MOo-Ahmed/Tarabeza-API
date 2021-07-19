@@ -32,6 +32,13 @@ class UserModel extends \Illuminate\Database\Eloquent\Model
 		return $res ;
 	}
 
+	public function customer($_id){
+		$res = Capsule::table('customers')->select('customers.*')
+				->where('customers.user_id', '=', $_id)
+				->get();
+				
+		return $res ;
+	}
 	
     
 }

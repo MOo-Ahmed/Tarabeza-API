@@ -61,7 +61,21 @@ class UserController extends \Core\Controller
         {
             $this->response->renderFail($this->response::HTTP_BAD_REQUEST, "Invalid data provided.");
         }
-    }
+	}
+	
+	public function getCustomer($_id){
+		$model = new UserModel();
+		$customer = $model->customer($_id);
+
+		if($customer)
+		{
+			$this->response->renderOk($this->response::HTTP_OK, $customer);
+		}
+		else
+		{
+			$this->response->renderFail($this->response::HTTP_NOT_FOUND, "Could not find specified user.");
+		}
+	} 
 
 	// public function recovery()
 	// {

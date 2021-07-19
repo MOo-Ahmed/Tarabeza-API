@@ -96,7 +96,9 @@ $capsule->bootEloquent();
                 
         $router->post("/users/check_confirmation_code", 
                     ['controller' => 'User\\UserController', 'action' => 'checkConfirmationCode'])
-                ->middleware(["admin", "customer", "restaurant_manager", "staff"]);        
+                ->middleware(["admin", "customer", "restaurant_manager", "staff"]);   
+                
+        $router->get("/customer/([0-9]+)", ['controller' => 'User\\UserController', 'action' => 'getCustomer']);
         
         $router->post("/cust/pref/add", ['controller' => 'User\\UserController', 'action' => 'insertPreference']);
         
