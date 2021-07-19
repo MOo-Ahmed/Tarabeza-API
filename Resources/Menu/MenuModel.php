@@ -9,7 +9,15 @@ use Illuminate\Container\Container;
 class MenuModel extends \Illuminate\Database\Eloquent\Model
 {
 	public $table = "items";
-  
+  	
+  	protected $fillable = ["name", "description", "price", "discount", "is_available"];
+
+  	public function findById($_id)
+    {
+    	$item = MenuModel::where("id", "=", $_id)->limit(1)->get();
+		return $item;
+	}
+
 	public function findItemsByRestaurantId($_id)
     {
     	$res = Capsule::table('items')->select('items.*', 'categories.name as category_name')
@@ -20,5 +28,12 @@ class MenuModel extends \Illuminate\Database\Eloquent\Model
 
 		
 		return $res;
+    }
+
+    public function updatea($_id, $_input)
+    {
+        return MenuModel::where("items.id", "=", $_id)
+                    ->update($_input);
+    	
     }
 }

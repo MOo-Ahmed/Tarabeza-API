@@ -16,7 +16,7 @@ return
     // API URL
     "recommendation_systems" => 
     [
-        "restaurant_url" => "https://nofipay.net/restaurant-recommender-system/restaurants/recommendations",
+        "restaurant_url" => "http://127.0.0.1:5000/restaurants/recommendations/",
     ],
 
     // API Debug Mode

@@ -33,6 +33,11 @@ class Request
         return $this->getMethod() === 'post';
     }
 
+    public function isPut()
+    {
+        return $this->getMethod() === 'put';
+    }
+
     public function getInput()
     {
         $data = [];
@@ -45,7 +50,7 @@ class Request
             }
         }
 
-        if($this->isPost())
+        if($this->isPost() || $this->isPut())
         {
             $data = json_decode(file_get_contents("php://input"), true);
 

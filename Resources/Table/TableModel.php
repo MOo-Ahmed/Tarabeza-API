@@ -37,4 +37,17 @@ class TableModel extends \Illuminate\Database\Eloquent\Model
                 return $res;
         }
 
+        public function create($_input)
+        {                           
+                //First insert the order
+                $res = Capsule::table('tables')->insertGetId(array(
+                'number'   => $_input['number'],
+                'restaurant_id' => $_input['restaurant_id'], 
+                'no_of_chairs'  => $_input['no_of_chairs']));
+
+               
+                        
+                return $res;
+        }
+
 }

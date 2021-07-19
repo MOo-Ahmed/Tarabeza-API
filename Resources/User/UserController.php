@@ -5,6 +5,46 @@ use Rakit\Validation\Validator;
 
 class UserController extends \Core\Controller
 {
+	public function getCustomer($_id){
+		$model = new UserModel();
+		$customer = $model->customer($_id);
+
+		if($customer)
+		{
+			$this->response->renderOk($this->response::HTTP_OK, $customer);
+		}
+		else
+		{
+			$this->response->renderFail($this->response::HTTP_NOT_FOUND, "Could not find specified user.");
+		}
+	} 
+	
+	public function showReservations($_id)
+	{
+		$model = new UserModel();
+		$reservations = $model->findReservationsByUserId($_id);
+
+		$this->response->renderOk($this->response::HTTP_OK, $reservations);
+		/*
+		
+
+		if($users)
+		{
+			foreach ($users as &$user)
+			{
+				// unset password
+			    unset($user["password"]);
+			}
+
+			$this->response->renderOk($this->response::HTTP_OK, $users);
+		}
+		else
+		{
+			$this->response->renderFail($this->response::HTTP_NOT_FOUND, "Could not find users.");
+		}
+		*/
+	}
+
 	public function index()
 	{
 		/*
@@ -61,21 +101,7 @@ class UserController extends \Core\Controller
         {
             $this->response->renderFail($this->response::HTTP_BAD_REQUEST, "Invalid data provided.");
         }
-	}
-	
-	public function getCustomer($_id){
-		$model = new UserModel();
-		$customer = $model->customer($_id);
-
-		if($customer)
-		{
-			$this->response->renderOk($this->response::HTTP_OK, $customer);
-		}
-		else
-		{
-			$this->response->renderFail($this->response::HTTP_NOT_FOUND, "Could not find specified user.");
-		}
-	} 
+    }
 
 	// public function recovery()
 	// {

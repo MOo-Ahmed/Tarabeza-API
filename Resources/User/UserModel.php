@@ -12,6 +12,27 @@ class UserModel extends \Illuminate\Database\Eloquent\Model
 	protected $fillable = ['email','is_active'];
 	protected $hidden = array("password", "updated_at", "created_at");
 
+	public function customer($_id){
+		$res = Capsule::table('customers')->select('customers.*')
+				->where('customers.user_id', '=', $_id)
+				->get();
+
+		return $res ;
+	}
+	
+	public function findReservationsByUserId($_id)
+    {
+    	$res = Capsule::table('reservations')->select('reservations.*')
+		    	->join('customers', 'customers.id', '=', 'reservations.customer_id')
+		    	->join('users', 'users.id', '=', 'customers.id')
+		    	->where('reservations.customer_id', '=', $_id)
+		    	->get();
+    	
+
+		
+		return $res;
+    }
+
 	public function findById($_id)
 	{
 		$res = UserModel::where("users.id", "=", $_id)->first()->toArray();
@@ -32,13 +53,6 @@ class UserModel extends \Illuminate\Database\Eloquent\Model
 		return $res ;
 	}
 
-	public function customer($_id){
-		$res = Capsule::table('customers')->select('customers.*')
-				->where('customers.user_id', '=', $_id)
-				->get();
-				
-		return $res ;
-	}
 	
     
 }

@@ -2,6 +2,8 @@
 
 namespace Resources\Feed;
 
+use Resources\User;
+
 class FeedController extends \Core\Controller
 {
 	public function index()
@@ -29,7 +31,8 @@ class FeedController extends \Core\Controller
 
 		$data["recent_restaurants"] = $model->recentRestaurants(6);
 		$data["recent_items"] = $model->recentItems(6);
-		$json = json_decode(file_get_contents($GLOBALS["app"]["recommendation_systems"]["restaurant_url"]. "?prefs=Beverages,Burgers&n=8&latitude=31.2020433&longitude=30.0142615"));
+
+		$json = json_decode(file_get_contents($GLOBALS["app"]["recommendation_systems"]["restaurant_url"] . $_id));
 
 		$data["recommended_restaurants"] = $json->data;
 

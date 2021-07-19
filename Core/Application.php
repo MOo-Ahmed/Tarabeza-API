@@ -55,7 +55,7 @@ class Application
         $capsule->addConnection([
             'driver'    => 'mysql',
             'host'      => 'localhost',
-            'database'  => 'nofipayn_restaurant_reservations_system',
+            'database'  => 'final',
             'username'  => 'root',
             'password'  => '',
             'charset'   => 'utf8',
@@ -72,7 +72,7 @@ $capsule->bootEloquent();
 
         $request = new \Core\HTTP\Request();
         $response = new \Core\HTTP\Response();
-        $router = new \Core\Router("/api", $request, $response);
+        $router = new \Core\Router("/final", $request, $response);
 
         // Set Prefix e.g. /v1
         $router->setPrefix('/' . $GLOBALS["app"]["version"]);
@@ -96,12 +96,12 @@ $capsule->bootEloquent();
                 
         $router->post("/users/check_confirmation_code", 
                     ['controller' => 'User\\UserController', 'action' => 'checkConfirmationCode'])
-                ->middleware(["admin", "customer", "restaurant_manager", "staff"]);   
-                
-        $router->get("/customer/([0-9]+)", ['controller' => 'User\\UserController', 'action' => 'getCustomer']);
+                ->middleware(["admin", "customer", "restaurant_manager", "staff"]);        
         
         $router->post("/cust/pref/add", ['controller' => 'User\\UserController', 'action' => 'insertPreference']);
         
+        $router->get("/customer/([0-9]+)", ['controller' => 'User\\UserController', 'action' => 'getCustomer']);
+
         $router->post("/reviews/add", ['controller' => 'Review\\ReviewController', 'action' => 'postCustomerReview']);
         $router->get("/reviews/([0-9]+)", ['controller' => 'Review\\ReviewController', 'action' => 'index']);
 
@@ -122,11 +122,11 @@ $capsule->bootEloquent();
         $router->get("/restaurants/([0-9]+)", ['controller' => 'Restaurant\\RestaurantController', 'action' => 'show']);
         $router->get("/restaurants/dash/([0-9]+)", ['controller' => 'Order\\OrderController', 'action' => 'dashboard']);
 
-
+        $router->put("/restaurants/([0-9]+)", ['controller' => 'Restaurant\\RestaurantController', 'action' => 'update']);
 		//------------------------------------------------------------
 		$router->get("/menu/([0-9]+)", ['controller' => 'Menu\\MenuController', 'action' => 'index']);
         $router->get("/menu/recommend", ['controller' => 'Menu\\MenuController', 'action' => 'recommendItems']);
-        
+        $router->put("/menu/([0-9]+)", ['controller' => 'Menu\\MenuController', 'action' => 'update']);
         //------------------------------------------------------------
         $router->post("/orders/make", ['controller' => 'Order\\OrderController', 'action' => 'insertOrder']);
         $router->post("/orders/finish", ['controller' => 'Order\\OrderController', 'action' => 'finishOrder']);
@@ -144,6 +144,10 @@ $capsule->bootEloquent();
         $router->get("/tables/release/([0-9]+)/([0-9]+)", ['controller' => 'Table\\TableController', 'action' => 'release']);
         $router->get("/tables/hold/([0-9]+)/([0-9]+)", ['controller' => 'Table\\TableController', 'action' => 'hold']);
         $router->post("/tables/available", ['controller' => 'Table\\TableController', 'action' => 'getAvailable']);
+
+        $router->post("/tables", ['controller' => 'Table\\TableController', 'action' => 'insertTable']);
+
+        $router->get("/customer/reservations/([0-9]+)", ['controller' => 'User\\UserController', 'action' => 'showReservations']);
 
         // Resolve
         $router->resolve();
