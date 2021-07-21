@@ -1,0 +1,7 @@
+All cols :
+
+id	rest_id	userID	time	status	rest_long	rest_lat	distance	user_long	user_lat	name	gender	age	vacation
+------------------------------------
+important :
+
+'rest_id','distance','user_long','user_lat'

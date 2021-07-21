@@ -1,0 +1,12 @@
+missed -> 0
+activated -> 1
+cancelled -> 2
+-----------------------
+different -> 0
+same -> 1
+--------------
+female -> 0
+male -> 1
+-----------
+work -> 0
+holiday -> 1
