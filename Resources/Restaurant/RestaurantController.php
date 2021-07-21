@@ -80,5 +80,34 @@ class RestaurantController extends \Core\Controller
 										"Can't find the restaurant specified.");
 		}
 	}
-	
+
+	public function predictReservation($restID, $userID){
+		$data = [];
+		$json = json_decode(file_get_contents($GLOBALS["app"]["recommendation_systems"]["reservation_prediction_url"] . $userID . "/" . $restID));
+		$data = $json->Data;
+
+		if($data)
+		{
+			$this->response->renderOk($this->response::HTTP_OK, $data);
+		}
+		else
+		{
+			$this->response->renderFail($this->response::HTTP_NOT_FOUND, "No reservation data exists.");
+		}
+	}
+
+	public function recommendBranches($restID){
+		$data = [];
+		$json = json_decode(file_get_contents($GLOBALS["app"]["recommendation_systems"]["branch_url"] . $restID));
+		$data = $json;
+
+		if($data)
+		{
+			$this->response->renderOk($this->response::HTTP_OK, $data);
+		}
+		else
+		{
+			$this->response->renderFail($this->response::HTTP_NOT_FOUND, "No reservation data exists.");
+		}
+	}
 }

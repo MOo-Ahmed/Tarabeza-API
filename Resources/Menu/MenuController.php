@@ -5,13 +5,21 @@ use Rakit\Validation\Validator;
 
 class MenuController extends \Core\Controller
 {
-	/*
-		This function takes the id of the restaurant and the id of the category of the menu item, 
-		then it'll call a recommender engine to return a set of recommended menu items 
-	*/
-	public function recommendItems()
+	
+	public function recommendItems($rest_id, $cat_id)
     {
-    	$this->response->renderOk($this->response::HTTP_OK, "Here are the recommendations");
+		$data = [];
+		$json = json_decode(file_get_contents($GLOBALS["app"]["recommendation_systems"]["menu_url"] . $rest_id . "/" . $cat_id));
+		$data = $json->Data;
+
+		if($data)
+		{
+			$this->response->renderOk($this->response::HTTP_OK, $data);
+		}
+		else
+		{
+			$this->response->renderFail($this->response::HTTP_NOT_FOUND, "No menu items found or the restaurant doesn't exist anymore.");
+		}
     }
 	
 	public function index($_id){

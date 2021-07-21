@@ -15,7 +15,17 @@ class DB:
   def getRecommendations(self, suffix, n, restID):
     mycursor = self.mydb.cursor()
     Items = []
+
+    if len(suffix) == 0:
+      suffix = []
+      query = '''SELECT category_id FROM restaurant_has_categories WHERE restaurant_id = %s ''' %restID
+      mycursor.execute(query)
+      myresult = mycursor.fetchall()
+      for x in myresult:
+        suffix.append(x[0])
+
     for i in range (0, len(suffix)) :
+      
       query = '''SELECT items.id AS ItemID, items.name AS ItemName, items.price AS price, items.category_id AS CategoryID, COUNT(*) AS ItemCount from 
       (SELECT order_details.meal_id, order_details.order_id, orders.id, orders.restaurant_id 
       FROM orders INNER JOIN order_details 
@@ -26,10 +36,23 @@ class DB:
       #Query = "SELECT id, name, price FROM items where restaurant_id = %s" %ID
       val = (restID,restID, int(suffix[i]), n)
       mycursor.execute(query, val)
-      myresult = mycursor.fetchall()
       
+      myresult = mycursor.fetchall()
       for x in myresult:
         y = self.Convert(x)
-        #print(y)
         Items.append(y)
-    return Items
+
+    if len(Items) != 0:
+      return Items
+    else:
+      for i in range (0, len(suffix)) :
+        query = '''SELECT items.id AS ItemID, items.name AS ItemName, items.price AS price, items.category_id AS CategoryID from items ON Q1.meal_id = items.id 
+        AND items.id IN (SELECT items.id from items WHERE items.restaurant_id = %s AND items.category_id = %s) 
+        GROUP BY ItemName ORDER BY `ItemCount` DESC  LIMIT %s '''
+        val = (restID,restID, int(suffix[i]), n)
+        mycursor.execute(query, val)
+        myresult = mycursor.fetchall()  
+        for x in myresult:
+          y = self.Convert(x)
+          Items.append(y)
+      return Items

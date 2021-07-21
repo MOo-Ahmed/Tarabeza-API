@@ -14,9 +14,8 @@ class RecommendationEngine :
 
     recommendation_name = 'menu-items'
     
-    def __init__(self, sfx, itemID, restaurantID, n):
+    def __init__(self, sfx, restaurantID, n):
         global suffix 
-        self.itemID = itemID
         self.restID = restaurantID
         self.n = n
         if suffix == None :
@@ -44,7 +43,7 @@ class RecommendationEngine :
         '''
         db = DB.DB()
         i = db.getRecommendations(suffix, self.n, self.restID)
-        jsonData =  { 'Recommendation-type' : 'menu items', 'Data' : i}
+        jsonData =  {'Data' : i}
         jsonStr = json.dumps(jsonData)
         return jsonStr
         

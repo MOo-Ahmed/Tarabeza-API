@@ -477,3 +477,113 @@ Stack trace:
 #3 D:\XAMPP\htdocs\api\index.php(33): Core\Application::run()
 #4 {main}
   thrown in D:\XAMPP\htdocs\api\Resources\User\UserController.php on line 35
+[21-Jul-2021 22:15:50 Europe/Berlin] PHP Warning:  Undefined property: stdClass::$data in D:\XAMPP\htdocs\api\Resources\Menu\MenuController.php on line 13
+[21-Jul-2021 22:16:33 Europe/Berlin] PHP Warning:  Attempt to read property "data" on string in D:\XAMPP\htdocs\api\Resources\Menu\MenuController.php on line 13
+[21-Jul-2021 22:18:35 Europe/Berlin] PHP Warning:  file_get_contents(http://127.0.0.1:5000/menu/recommendations/1/4): Failed to open stream: No connection could be made because the target machine actively refused it in D:\XAMPP\htdocs\api\Resources\Menu\MenuController.php on line 12
+[21-Jul-2021 22:22:01 Europe/Berlin] PHP Warning:  file_get_contents(http://127.0.0.1:5000/menu/recommendations/1/4): Failed to open stream: HTTP request failed! HTTP/1.0 500 INTERNAL SERVER ERROR
+ in D:\XAMPP\htdocs\api\Resources\Menu\MenuController.php on line 12
+[22-Jul-2021 00:14:01 Europe/Berlin] PHP Warning:  Attempt to read property "Data" on null in D:\XAMPP\htdocs\api\Resources\Restaurant\RestaurantController.php on line 102
+[22-Jul-2021 00:16:40 Europe/Berlin] PHP Warning:  file_get_contents(http://127.0.0.1:5000/restaurant/branch/recommendation/1): Failed to open stream: No connection could be made because the target machine actively refused it in D:\XAMPP\htdocs\api\Resources\Restaurant\RestaurantController.php on line 101
+[22-Jul-2021 00:18:53 Europe/Berlin] PHP Warning:  Undefined property: stdClass::$data in D:\XAMPP\htdocs\api\Resources\Restaurant\RestaurantController.php on line 102
+[22-Jul-2021 00:25:10 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'users.name' in 'field list' in D:\XAMPP\htdocs\api\vendor\illuminate\database\Connection.php:338
+Stack trace:
+#0 D:\XAMPP\htdocs\api\vendor\illuminate\database\Connection.php(338): PDO->prepare('select `orders`...')
+#1 D:\XAMPP\htdocs\api\vendor\illuminate\database\Connection.php(671): Illuminate\Database\Connection->Illuminate\Database\{closure}('select `orders`...', Array)
+#2 D:\XAMPP\htdocs\api\vendor\illuminate\database\Connection.php(638): Illuminate\Database\Connection->runQueryCallback('select `orders`...', Array, Object(Closure))
+#3 D:\XAMPP\htdocs\api\vendor\illuminate\database\Connection.php(346): Illuminate\Database\Connection->run('select `orders`...', Array, Object(Closure))
+#4 D:\XAMPP\htdocs\api\vendor\illuminate\database\Query\Builder.php(2313): Illuminate\Database\Connection->select('select `orders`...', Array, true)
+#5 D:\XAMPP\htdocs\api\vendor\illuminate\database\Query\Builder.php(2301): Illuminate\Database\Query\Builder->runSelect()
+#6 D:\XAMPP\htdocs\api\vendor\illuminate\database\Query\Builder.php(2796): Illuminate\Database\Query\Builder->Illuminate\Database\Query\{closure}()
+#7 D:\XAMPP\htdocs\api\vendor\illuminate\database\Query\Builder.php(2302): Illuminate\Database\Query\Builder->onceWithColumns(Array, Object(Closure))
+#8 D:\XAMPP\htdocs\api\Resources\Order\OrderModel.php(71): Illuminate\Database\Query\Builder->get()
+#9 D:\XAMPP\htdocs\api\Resources\Order\OrderController.php(156): Resources\Order\OrderModel->getNonFinished('orders.restaura...', '1')
+#10 [internal function]: Resources\Order\OrderController->getRestaurantNonFinishedOrders('1')
+#11 D:\XAMPP\htdocs\api\Core\Router.php(170): call_user_func_array(Array, Array)
+#12 D:\XAMPP\htdocs\api\Core\Application.php(155): Core\Router->resolve()
+#13 D:\XAMPP\htdocs\api\index.php(33): Core\Application::run()
+#14 {main}
+
+Next Illuminate\Database\QueryException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'users.name' in 'field list' (SQL: select `orders`.*, `items`.`name` as `item_name`, `order_details`.`quantity` as `qty`, `order_details`.`total` as `total`, `users`.`name` from `orders` inner join `order_details` on `orders`.`id` = `order_details`.`order_id` inner join `items` on `order_details`.`meal_id` = `items`.`id` inner join `customers` on `orders`.`customer_id` = `customers`.`id` inner join `users` on `users`.`id` = `customers`.`user_id` where `orders`.`is_finished` = 0 and `orders`.`is_deleted` = 0 and `orders`.`restaurant_id` = 1) in D:\XAMPP\htdocs\api\vendor\illuminate\database\Connection.php:678
+Stack trace:
+#0 D:\XAMPP\htdocs\api\vendor\illuminate\database\Connection.php(638): Illuminate\Database\Connection->runQueryCallback('select `orders`...', Array, Object(Closure))
+#1 D:\XAMPP\htdocs\api\vendor\illuminate\database\Connection.php(346): Illuminate\Database\Connection->run('select `orders`...', Array, Object(Closure))
+#2 D:\XAMPP\htdocs\api\vendor\illuminate\database\Query\Builder.php(2313): Illuminate\Database\Connection->select('select `orders`...', Array, true)
+#3 D:\XAMPP\htdocs\api\vendor\illuminate\database\Query\Builder.php(2301): Illuminate\Database\Query\Builder->runSelect()
+#4 D:\XAMPP\htdocs\api\vendor\illuminate\database\Query\Builder.php(2796): Illuminate\Database\Query\Builder->Illuminate\Database\Query\{closure}()
+#5 D:\XAMPP\htdocs\api\vendor\illuminate\database\Query\Builder.php(2302): Illuminate\Database\Query\Builder->onceWithColumns(Array, Object(Closure))
+#6 D:\XAMPP\htdocs\api\Resources\Order\OrderModel.php(71): Illuminate\Database\Query\Builder->get()
+#7 D:\XAMPP\htdocs\api\Resources\Order\OrderController.php(156): Resources\Order\OrderModel->getNonFinished('orders.restaura...', '1')
+#8 [internal function]: Resources\Order\OrderController->getRestaurantNonFinishedOrders('1')
+#9 D:\XAMPP\htdocs\api\Core\Router.php(170): call_user_func_array(Array, Array)
+#10 D:\XAMPP\htdocs\api\Core\Application.php(155): Core\Router->resolve()
+#11 D:\XAMPP\htdocs\api\index.php(33): Core\Application::run()
+#12 {main}
+  thrown in D:\XAMPP\htdocs\api\vendor\illuminate\database\Connection.php on line 678
+[22-Jul-2021 00:27:06 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'users.name' in 'field list' in D:\XAMPP\htdocs\api\vendor\illuminate\database\Connection.php:338
+Stack trace:
+#0 D:\XAMPP\htdocs\api\vendor\illuminate\database\Connection.php(338): PDO->prepare('select `orders`...')
+#1 D:\XAMPP\htdocs\api\vendor\illuminate\database\Connection.php(671): Illuminate\Database\Connection->Illuminate\Database\{closure}('select `orders`...', Array)
+#2 D:\XAMPP\htdocs\api\vendor\illuminate\database\Connection.php(638): Illuminate\Database\Connection->runQueryCallback('select `orders`...', Array, Object(Closure))
+#3 D:\XAMPP\htdocs\api\vendor\illuminate\database\Connection.php(346): Illuminate\Database\Connection->run('select `orders`...', Array, Object(Closure))
+#4 D:\XAMPP\htdocs\api\vendor\illuminate\database\Query\Builder.php(2313): Illuminate\Database\Connection->select('select `orders`...', Array, true)
+#5 D:\XAMPP\htdocs\api\vendor\illuminate\database\Query\Builder.php(2301): Illuminate\Database\Query\Builder->runSelect()
+#6 D:\XAMPP\htdocs\api\vendor\illuminate\database\Query\Builder.php(2796): Illuminate\Database\Query\Builder->Illuminate\Database\Query\{closure}()
+#7 D:\XAMPP\htdocs\api\vendor\illuminate\database\Query\Builder.php(2302): Illuminate\Database\Query\Builder->onceWithColumns(Array, Object(Closure))
+#8 D:\XAMPP\htdocs\api\Resources\Order\OrderModel.php(71): Illuminate\Database\Query\Builder->get()
+#9 D:\XAMPP\htdocs\api\Resources\Order\OrderController.php(156): Resources\Order\OrderModel->getNonFinished('orders.restaura...', '1')
+#10 [internal function]: Resources\Order\OrderController->getRestaurantNonFinishedOrders('1')
+#11 D:\XAMPP\htdocs\api\Core\Router.php(170): call_user_func_array(Array, Array)
+#12 D:\XAMPP\htdocs\api\Core\Application.php(155): Core\Router->resolve()
+#13 D:\XAMPP\htdocs\api\index.php(33): Core\Application::run()
+#14 {main}
+
+Next Illuminate\Database\QueryException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'users.name' in 'field list' (SQL: select `orders`.*, `items`.`name` as `item_name`, `order_details`.`quantity` as `qty`, `order_details`.`total` as `total`, `users`.`name` as `customer_name` from `orders` inner join `order_details` on `orders`.`id` = `order_details`.`order_id` inner join `items` on `order_details`.`meal_id` = `items`.`id` inner join `customers` on `orders`.`customer_id` = `customers`.`id` inner join `users` on `users`.`id` = `customers`.`user_id` where `orders`.`is_finished` = 0 and `orders`.`is_deleted` = 0 and `orders`.`restaurant_id` = 1) in D:\XAMPP\htdocs\api\vendor\illuminate\database\Connection.php:678
+Stack trace:
+#0 D:\XAMPP\htdocs\api\vendor\illuminate\database\Connection.php(638): Illuminate\Database\Connection->runQueryCallback('select `orders`...', Array, Object(Closure))
+#1 D:\XAMPP\htdocs\api\vendor\illuminate\database\Connection.php(346): Illuminate\Database\Connection->run('select `orders`...', Array, Object(Closure))
+#2 D:\XAMPP\htdocs\api\vendor\illuminate\database\Query\Builder.php(2313): Illuminate\Database\Connection->select('select `orders`...', Array, true)
+#3 D:\XAMPP\htdocs\api\vendor\illuminate\database\Query\Builder.php(2301): Illuminate\Database\Query\Builder->runSelect()
+#4 D:\XAMPP\htdocs\api\vendor\illuminate\database\Query\Builder.php(2796): Illuminate\Database\Query\Builder->Illuminate\Database\Query\{closure}()
+#5 D:\XAMPP\htdocs\api\vendor\illuminate\database\Query\Builder.php(2302): Illuminate\Database\Query\Builder->onceWithColumns(Array, Object(Closure))
+#6 D:\XAMPP\htdocs\api\Resources\Order\OrderModel.php(71): Illuminate\Database\Query\Builder->get()
+#7 D:\XAMPP\htdocs\api\Resources\Order\OrderController.php(156): Resources\Order\OrderModel->getNonFinished('orders.restaura...', '1')
+#8 [internal function]: Resources\Order\OrderController->getRestaurantNonFinishedOrders('1')
+#9 D:\XAMPP\htdocs\api\Core\Router.php(170): call_user_func_array(Array, Array)
+#10 D:\XAMPP\htdocs\api\Core\Application.php(155): Core\Router->resolve()
+#11 D:\XAMPP\htdocs\api\index.php(33): Core\Application::run()
+#12 {main}
+  thrown in D:\XAMPP\htdocs\api\vendor\illuminate\database\Connection.php on line 678
+[22-Jul-2021 00:29:44 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'users.name' in 'field list' in D:\XAMPP\htdocs\api\vendor\illuminate\database\Connection.php:338
+Stack trace:
+#0 D:\XAMPP\htdocs\api\vendor\illuminate\database\Connection.php(338): PDO->prepare('select `orders`...')
+#1 D:\XAMPP\htdocs\api\vendor\illuminate\database\Connection.php(671): Illuminate\Database\Connection->Illuminate\Database\{closure}('select `orders`...', Array)
+#2 D:\XAMPP\htdocs\api\vendor\illuminate\database\Connection.php(638): Illuminate\Database\Connection->runQueryCallback('select `orders`...', Array, Object(Closure))
+#3 D:\XAMPP\htdocs\api\vendor\illuminate\database\Connection.php(346): Illuminate\Database\Connection->run('select `orders`...', Array, Object(Closure))
+#4 D:\XAMPP\htdocs\api\vendor\illuminate\database\Query\Builder.php(2313): Illuminate\Database\Connection->select('select `orders`...', Array, true)
+#5 D:\XAMPP\htdocs\api\vendor\illuminate\database\Query\Builder.php(2301): Illuminate\Database\Query\Builder->runSelect()
+#6 D:\XAMPP\htdocs\api\vendor\illuminate\database\Query\Builder.php(2796): Illuminate\Database\Query\Builder->Illuminate\Database\Query\{closure}()
+#7 D:\XAMPP\htdocs\api\vendor\illuminate\database\Query\Builder.php(2302): Illuminate\Database\Query\Builder->onceWithColumns(Array, Object(Closure))
+#8 D:\XAMPP\htdocs\api\Resources\Order\OrderModel.php(72): Illuminate\Database\Query\Builder->get()
+#9 D:\XAMPP\htdocs\api\Resources\Order\OrderController.php(156): Resources\Order\OrderModel->getNonFinished('orders.restaura...', '1')
+#10 [internal function]: Resources\Order\OrderController->getRestaurantNonFinishedOrders('1')
+#11 D:\XAMPP\htdocs\api\Core\Router.php(170): call_user_func_array(Array, Array)
+#12 D:\XAMPP\htdocs\api\Core\Application.php(155): Core\Router->resolve()
+#13 D:\XAMPP\htdocs\api\index.php(33): Core\Application::run()
+#14 {main}
+
+Next Illuminate\Database\QueryException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'users.name' in 'field list' (SQL: select `orders`.*, `items`.`name` as `item_name`, `order_details`.`quantity` as `qty`, `order_details`.`total` as `total`, `users`.`name` as `customer_name` from `orders` inner join `customers` on `orders`.`customer_id` = `customers`.`id` inner join `users` on `users`.`id` = `customers`.`user_id` inner join `order_details` on `orders`.`id` = `order_details`.`order_id` inner join `items` on `order_details`.`meal_id` = `items`.`id` where `orders`.`is_finished` = 0 and `orders`.`is_deleted` = 0 and `orders`.`restaurant_id` = 1) in D:\XAMPP\htdocs\api\vendor\illuminate\database\Connection.php:678
+Stack trace:
+#0 D:\XAMPP\htdocs\api\vendor\illuminate\database\Connection.php(638): Illuminate\Database\Connection->runQueryCallback('select `orders`...', Array, Object(Closure))
+#1 D:\XAMPP\htdocs\api\vendor\illuminate\database\Connection.php(346): Illuminate\Database\Connection->run('select `orders`...', Array, Object(Closure))
+#2 D:\XAMPP\htdocs\api\vendor\illuminate\database\Query\Builder.php(2313): Illuminate\Database\Connection->select('select `orders`...', Array, true)
+#3 D:\XAMPP\htdocs\api\vendor\illuminate\database\Query\Builder.php(2301): Illuminate\Database\Query\Builder->runSelect()
+#4 D:\XAMPP\htdocs\api\vendor\illuminate\database\Query\Builder.php(2796): Illuminate\Database\Query\Builder->Illuminate\Database\Query\{closure}()
+#5 D:\XAMPP\htdocs\api\vendor\illuminate\database\Query\Builder.php(2302): Illuminate\Database\Query\Builder->onceWithColumns(Array, Object(Closure))
+#6 D:\XAMPP\htdocs\api\Resources\Order\OrderModel.php(72): Illuminate\Database\Query\Builder->get()
+#7 D:\XAMPP\htdocs\api\Resources\Order\OrderController.php(156): Resources\Order\OrderModel->getNonFinished('orders.restaura...', '1')
+#8 [internal function]: Resources\Order\OrderController->getRestaurantNonFinishedOrders('1')
+#9 D:\XAMPP\htdocs\api\Core\Router.php(170): call_user_func_array(Array, Array)
+#10 D:\XAMPP\htdocs\api\Core\Application.php(155): Core\Router->resolve()
+#11 D:\XAMPP\htdocs\api\index.php(33): Core\Application::run()
+#12 {main}
+  thrown in D:\XAMPP\htdocs\api\vendor\illuminate\database\Connection.php on line 678

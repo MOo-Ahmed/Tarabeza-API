@@ -59,19 +59,24 @@ class OrderModel extends \Illuminate\Database\Eloquent\Model
 		
 		$res = Capsule::table('orders')->select('orders.*', 'items.name as item_name',
 								'order_details.quantity as qty', 
-								'order_details.total as total')
+								'order_details.total as total',
+								'users.first_name AS first_name',
+								'users.last_name AS last_name')
 				->where('orders.is_finished', '=', 0)
 				->where('orders.is_deleted', '=', 0)
 				->where($selector, '=', $id)
+				->join('customers', 'orders.customer_id', '=', 'customers.id')
+                ->join('users', 'users.id', '=', 'customers.user_id') 
 				->join('order_details', 'orders.id', '=', 'order_details.order_id')
 				->join('items', 'order_details.meal_id', '=', 'items.id')
+				   
                 ->get();
             
         return $res;
 	}  
 
 	public function dashboard($_id){
-		$sql = "SELECT SUM(order_details.total) AS revenue, COUNT(order_details.id) AS orders
+		$sql = "SELECT SUM(order_details.total) AS revenue, COUNT(orders.id) AS orders
 		FROM order_details inner join orders 
 		ON orders.id = order_details.order_id 
 		where orders.restaurant_id = " . $_id . "
@@ -90,8 +95,8 @@ class OrderModel extends \Illuminate\Database\Eloquent\Model
 
 		$topHours = Capsule::select($sql);
 
-		$sql = "SELECT order_details.meal_id AS item_id, items.name AS item_name,
-		COUNT(order_details.meal_id) AS count_orders
+		$sql = "SELECT DISTINCT order_details.meal_id AS item_id, items.name AS item_name,
+		SUM(order_details.quantity) AS count_orders
 		FROM order_details inner join orders 
 		ON order_details.order_id = orders.id
 		inner join items 

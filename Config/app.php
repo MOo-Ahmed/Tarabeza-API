@@ -17,8 +17,10 @@ return
     "recommendation_systems" => 
     [
         "restaurant_url" => "http://127.0.0.1:5000/restaurants/recommendations/",
-    ],
-
+		"menu_url" => "http://127.0.0.1:5000/menu/recommendations/",
+		"reservation_prediction_url" => "http://127.0.0.1:5000/reservations/detect/",
+		"branch_url" => "http://127.0.0.1:5000/restaurant/branch/recommendation/"
+	],
     // API Debug Mode
     "debug" => true,
 

@@ -55,7 +55,7 @@ class Application
         $capsule->addConnection([
             'driver'    => 'mysql',
             'host'      => 'localhost',
-            'database'  => 'final',
+            'database'  => 'nofipayn_restaurant_reservations_system',
             'username'  => 'root',
             'password'  => '',
             'charset'   => 'utf8',
@@ -72,7 +72,7 @@ $capsule->bootEloquent();
 
         $request = new \Core\HTTP\Request();
         $response = new \Core\HTTP\Response();
-        $router = new \Core\Router("/final", $request, $response);
+        $router = new \Core\Router("/api", $request, $response);
 
         // Set Prefix e.g. /v1
         $router->setPrefix('/' . $GLOBALS["app"]["version"]);
@@ -121,11 +121,13 @@ $capsule->bootEloquent();
         $router->get("/restaurants", ['controller' => 'Restaurant\\RestaurantController', 'action' => 'index']);
         $router->get("/restaurants/([0-9]+)", ['controller' => 'Restaurant\\RestaurantController', 'action' => 'show']);
         $router->get("/restaurants/dash/([0-9]+)", ['controller' => 'Order\\OrderController', 'action' => 'dashboard']);
+        $router->get("/restaurants/branch/([0-9]+)", ['controller' => 'Restaurant\\RestaurantController', 'action' => 'recommendBranches']);
+
 
         $router->put("/restaurants/([0-9]+)", ['controller' => 'Restaurant\\RestaurantController', 'action' => 'update']);
 		//------------------------------------------------------------
 		$router->get("/menu/([0-9]+)", ['controller' => 'Menu\\MenuController', 'action' => 'index']);
-        $router->get("/menu/recommend", ['controller' => 'Menu\\MenuController', 'action' => 'recommendItems']);
+        $router->get("/menu/recommend/([0-9]+)/([0-9]+)", ['controller' => 'Menu\\MenuController', 'action' => 'recommendItems']);
         $router->put("/menu/([0-9]+)", ['controller' => 'Menu\\MenuController', 'action' => 'update']);
         //------------------------------------------------------------
         $router->post("/orders/make", ['controller' => 'Order\\OrderController', 'action' => 'insertOrder']);
