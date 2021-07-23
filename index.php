@@ -36,9 +36,8 @@ foreach(glob($configDir . "*.php") as $file)
 define('APP_END', microtime(true));
 
 //echo "<br>" . (APP_END - APP_START);
-/*
-if($configs["debug"]) 
+
+if($GLOBALS["app"]["debug"]) 
 {
 	echo "<br>" . (APP_END - APP_START);
 }
-*/

@@ -9,7 +9,7 @@ class DB:
       host="localhost",
       user="root",
       password="",
-      database="nofipayn_restaurant_reservations_system"
+      database="final"
     )
   
   def getCustomer(self, user_id, rest_id):

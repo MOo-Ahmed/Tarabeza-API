@@ -7,8 +7,14 @@ return
     // API URL
     "api_url" => "localhost",
 
+    // API Sub Folder URL
+    "api_sub_folder" => "api",
+
     // logo url URL
     "logos_base_url" => "localhost/api/thumb.php?t=l&w=200&h=180&src=",
+
+    // logo url URL
+    "restaurant_profile_web" => "https://nofipay.net/web/profile.html?id=",
 
     // API Documentation URL
     "documentation_url" => "",

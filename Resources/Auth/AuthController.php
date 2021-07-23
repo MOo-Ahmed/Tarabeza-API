@@ -164,6 +164,106 @@ class AuthController extends \Core\Controller
         
     }
 
+    public function passwordRecovery()
+    {
+        $validator = new Validator;
+        $authModel = new AuthModel();
+
+        $input = $this->request->getInput();
+
+        // make it
+        $validation = $validator->make($input, [
+            'email' => 'required|email'
+        ]);
+
+        // then validate
+        $validation->validate();
+
+        if($validation->fails())
+        {
+            // handling errors
+            $errors = $validation->errors();
+            $this->response->renderErrors($this->response::HTTP_BAD_REQUEST, $errors->firstOfAll());
+        }
+        
+        $confirmationCode = \Core\Utilities\Helper::generateConfirmationCode();
+        $authModel = new AuthModel();
+        $isUpdated = $authModel->updateConfirmationCodeByEmail($input["email"], $confirmationCode);
+        
+        if($isUpdated)
+        {
+            $subject = "Password Recovery - Confirmation code";
+            if(\core\EmailSender::send($input["email"], $subject, $confirmationCode))
+            {
+                $this->response->renderOk($this->response::HTTP_OK, "Confirmation code sent successfully.");
+            }
+            else
+            {
+                $this->response->renderOk($this->response::HTTP_OK, "Your email is invalid.");
+            }
+        }
+        else
+        {
+            $this->response->renderFail($this->response::HTTP_BAD_REQUEST, "Can't find the user specified.");
+        }
+    }
+
+    public function checkConfirmationCode()
+    {
+        $validator = new Validator;
+        $authModel = new AuthModel();
+
+        $input = $this->request->getInput();
+
+        // make it
+        $validation = $validator->make($input, [
+            'email' => 'required|email',
+            'confirmation_code' => 'required|numeric|min:10000|max:99999',
+            'password'              => 'required|min:8|max:255'
+        ]);
+
+        // then validate
+        $validation->validate();
+
+        if($validation->fails())
+        {
+            // handling errors
+            $errors = $validation->errors();
+            $this->response->renderErrors($this->response::HTTP_BAD_REQUEST, $errors->firstOfAll());
+        }
+        
+ 
+        $authModel = new AuthModel();
+        $user = $authModel->findByEmail($input["email"]);
+        
+        if($user)
+        {
+            if($user["confirmation_code"] == $input["confirmation_code"])
+            {
+                $user["new_password"] = password_hash($input["password"], PASSWORD_DEFAULT);
+              
+                $x = $authModel->updatePassword($user);
+                if($x)
+                {
+                    $this->response->renderOk($this->response::HTTP_OK, "User password updated successfully.");
+                }
+                else
+                {
+                    $this->response->renderOk($this->response::HTTP_OK, "User password not updated.");
+                }
+                
+            }
+            else
+            {
+                $this->response->renderOk($this->response::HTTP_OK, "Your confirmation code is invalid.");
+            }
+        }
+        else
+        {
+            $this->response->renderFail($this->response::HTTP_BAD_REQUEST, "Can't find the user specified.");
+        }
+    }
+
     public function updatePassword()
     {
         

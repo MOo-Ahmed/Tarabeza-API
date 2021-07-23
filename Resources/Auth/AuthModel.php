@@ -28,6 +28,7 @@ class AuthModel extends \Illuminate\Database\Eloquent\Model
 
   public function insert($_input)
   {
+
     $user = Capsule::table('users')->insertGetId($_input);
     if($user){
       $res = Capsule::table('customers')->insert(array(
@@ -38,12 +39,16 @@ class AuthModel extends \Illuminate\Database\Eloquent\Model
     else{
       return "DB Failure";
     }
-    
   }
 
   public function upd($_input)
   {
     return AuthModel::where("users.id", "=", $_input['id'])->update($_input);
+  }
+
+  public function updateConfirmationCodeByEmail($_email, $_confirmationCode){
+    return AuthModel::where("users.email", "=", $_email)
+                    ->update(array('confirmation_code' => $_confirmationCode));
   }
 
   public function updatePassword($_input){
@@ -109,4 +114,7 @@ class AuthModel extends \Illuminate\Database\Eloquent\Model
     //$user = insert($_input);
     
   }
+
+
+
 }

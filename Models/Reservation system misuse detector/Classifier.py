@@ -9,6 +9,7 @@ import pydotplus
 '''
 import io
 import DB
+import sys
 
 class Classifier :
     
@@ -18,12 +19,21 @@ class Classifier :
     def run(self, user_id, rest_id) :
         db = DB.DB()
         cust = db.getCustomer(user_id, rest_id)
+        
+        if not cust :
+            return 'miss'
+            
+        
         #print(cust[0][0])
         gender = 1
         if cust[0][1] == "female": gender = 0
 
         test = [[cust[0][0], 1, gender, cust[0][2]]]
-                
+
+        if not cust[0][1] or not cust[0][2] :
+            return 'miss'
+            
+
         col_names = ['status', 'distance','name','gender','age']
         # load dataset
         df = pd.read_csv(self.filename)

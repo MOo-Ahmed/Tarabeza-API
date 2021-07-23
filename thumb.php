@@ -48,8 +48,18 @@ if(!empty($_GET['t'])) {
 	exit('The \'t\' parameter is not set.');
 }
 
+// Define root path
+define('ROOT', realpath(__DIR__));
+
+
+// Define directory separator
+define('DS', DIRECTORY_SEPARATOR); 
+
+// Bootstrap the application and auto load all files.
+$config = require_once(ROOT . DS . "Config" .DS. "app.php");
+
 // Build up the src query
-$_GET['src'] = 'api/'.$type.'/'.$_GET['src']; 
+$_GET['src'] = $config["api_sub_folder"] . $type . '/'.$_GET['src']; 
 
 if(!empty($_GET['w'])) {
 	if(!in_array($_GET['w'], $width_list)) {

@@ -10,6 +10,19 @@ class RestaurantController extends \Core\Controller
 		$restaurants = RestaurantModel::get();
 		$this->response->renderOk($this->response::HTTP_OK, $restaurants);
 	}
+	public function showQrCode($_id)
+	{
+		header('Content-Type: image/png');
+
+        $data = $GLOBALS["app"]["restaurant_profile_web"] . $_id;
+        $options  = array('s' => "qr", "sf" => 16, "p" => 0);
+
+        $generator = new \Core\QRCode($data, $options);
+        $image = $generator->render_image();
+
+		imagepng($image);
+		imagedestroy($image);
+	}
 
 	public function show($_id)
 	{
@@ -81,6 +94,7 @@ class RestaurantController extends \Core\Controller
 		}
 	}
 
+	/*
 	public function predictReservation($restID, $userID){
 		$data = [];
 		$json = json_decode(file_get_contents($GLOBALS["app"]["recommendation_systems"]["reservation_prediction_url"] . $userID . "/" . $restID));
@@ -95,6 +109,7 @@ class RestaurantController extends \Core\Controller
 			$this->response->renderFail($this->response::HTTP_NOT_FOUND, "No reservation data exists.");
 		}
 	}
+	*/
 
 	public function recommendBranches($restID){
 		$data = [];

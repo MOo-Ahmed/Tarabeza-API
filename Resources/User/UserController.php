@@ -5,7 +5,8 @@ use Rakit\Validation\Validator;
 
 class UserController extends \Core\Controller
 {
-	public function getCustomer($_id){
+	public function getCustomer($_id)
+	{
 		$model = new UserModel();
 		$customer = $model->customer($_id);
 
@@ -18,8 +19,24 @@ class UserController extends \Core\Controller
 			$this->response->renderFail($this->response::HTTP_NOT_FOUND, "Could not find specified user.");
 		}
 	} 
-	
-	public function getStaff($_id){
+
+	public function getManager($_id)
+	{
+		$model = new UserModel();
+		$manager = $model->manager($_id);
+
+		if($manager)
+		{
+			$this->response->renderOk($this->response::HTTP_OK, $manager);
+		}
+		else
+		{
+			$this->response->renderFail($this->response::HTTP_NOT_FOUND, "Could not find specified manager.");
+		}
+	} 
+
+	public function getStaff($_id)
+	{
 		$model = new UserModel();
 		$staff = $model->staff($_id);
 
@@ -39,47 +56,6 @@ class UserController extends \Core\Controller
 		$reservations = $model->findReservationsByUserId($_id);
 
 		$this->response->renderOk($this->response::HTTP_OK, $reservations);
-		/*
-		
-
-		if($users)
-		{
-			foreach ($users as &$user)
-			{
-				// unset password
-			    unset($user["password"]);
-			}
-
-			$this->response->renderOk($this->response::HTTP_OK, $users);
-		}
-		else
-		{
-			$this->response->renderFail($this->response::HTTP_NOT_FOUND, "Could not find users.");
-		}
-		*/
-	}
-
-	public function index()
-	{
-		/*
-		$model = new UserModel();
-		$users = $model->findAll();
-
-		if($users)
-		{
-			foreach ($users as &$user)
-			{
-				// unset password
-			    unset($user["password"]);
-			}
-
-			$this->response->renderOk($this->response::HTTP_OK, $users);
-		}
-		else
-		{
-			$this->response->renderFail($this->response::HTTP_NOT_FOUND, "Could not find users.");
-		}
-		*/
 	}
 
 	public function insertPreference()
@@ -116,36 +92,6 @@ class UserController extends \Core\Controller
             $this->response->renderFail($this->response::HTTP_BAD_REQUEST, "Invalid data provided.");
         }
     }
-
-	// public function recovery()
-	// {
-	// 	$model = new UserModel();
-
-	// 	$validator = new \Core\Validation\Validator();
-	// 	$input = $this->request->getInput();
-
- //        $rules = [
- //            'email' => 'required'
- //        ];
-
- //        if(!$validator->isValid($input, $rules))
- //        {
- //            $this->response->renderFail($this->response::HTTP_BAD_REQUEST, $validator->getError());
- //        }
-
- //        $user = $model->findByEmail($input["email"]);
-
- //        if($user)
- //        {
- //        	$model->updateBy("email", $user["email"], "is_active", 1);
- //        	$data = array("Thanks! Please check " . $input["email"] . " for a link to reset your password.");
- //        	$this->response->renderOk($this->response::HTTP_OK, $data);
- //        }
- //        else
- //        {
- //        	$this->response->renderFail($this->response::HTTP_BAD_REQUEST, "No users found.");
- //        }
-	// }
 
 	public function checkConfirmationCode()
 	{
@@ -201,6 +147,59 @@ class UserController extends \Core\Controller
         $model->updateBy("email", $payload->email, "confirmation_code", $input["confirmation_code"]);
 
         $this->response->renderOk($this->response::HTTP_OK, array());
+	}
+
+	public function addReservation()
+	{
+        $validator = new Validator;
+        $input = $this->request->getInput();
+
+        // make it
+        $validation = $validator->make($input, [
+            'restaurant_id'   => 'required|numeric',
+            'table_id'   => 'required|numeric',
+            'requested_at'   => 'required'
+        ]);
+
+        // then validate
+        $validation->validate();
+
+        if($validation->fails())
+        {
+            // handling errors
+            $errors = $validation->errors();
+            $this->response->renderErrors($this->response::HTTP_BAD_REQUEST, $errors->firstOfAll());
+        }
+
+        $payload = \Core\Authorizer::getPayload();
+		$model = new UserModel();
+		
+		$customer = $model->customer($payload->id);
+
+		if(isset($customer[0]))
+		{
+			$data = file_get_contents($GLOBALS["app"]["recommendation_systems"]["reservation_prediction_url"] . $payload->id . "/" . $input["restaurant_id"]);
+			
+			$input["comment"] = $data;
+			$input["customer_id"] = $customer[0]->id;
+
+			$isInserted = $model->insertReservation($input);
+
+			if($isInserted)
+			{
+
+				$this->response->renderOk($this->response::HTTP_OK, "Successfully added your reservation");
+			}
+			else
+			{
+
+				$this->response->renderOk($this->response::HTTP_OK, "Invalid data provided.");
+			}
+		}
+		else
+		{
+			$this->response->renderFail($this->response::HTTP_NOT_FOUND, "Could not find customer for specified ID.");
+		}
 	}
 
 	public function me()

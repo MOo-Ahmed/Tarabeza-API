@@ -21,7 +21,7 @@ return
             "host"     => "localhost",
             "username" => "root",
             "password" => "",
-            "db_name"  => "nofipayn_restaurant_reservations_system",
+            "db_name"  => "final",
         ],
     ],
 

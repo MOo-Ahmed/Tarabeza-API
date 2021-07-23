@@ -11,6 +11,10 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 
 use Illuminate\Container\Container;
 
+
+use Spatie\Async\Pool;
+
+
 class Application 
 {
     // Application constructor
@@ -44,31 +48,36 @@ class Application
      */
     public static function run() 
     {
+        /*
+        $pool = Pool::create();
+
+        $pool = async(\core\EmailSender::send())->then(function () {
+// operation after result
+});
+*/
+
+
+    
+       
+        //\core\EmailSender::send("", "");
         self::init();
 
-        // $Capsule = new Capsule;
-        // $Capsule->addConnection(config::get('database'));
-        // $Capsule->setAsGlobal();  //this is important
-        // $Capsule->bootEloquent();
         $capsule = new Capsule;
-
+        $defaultConnection = $GLOBALS["database"]["default_connection"];
         $capsule->addConnection([
-            'driver'    => 'mysql',
-            'host'      => 'localhost',
-            'database'  => 'nofipayn_restaurant_reservations_system',
-            'username'  => 'root',
-            'password'  => '',
+            'driver'    => $defaultConnection,
+            'host'      => $GLOBALS["database"]["connections"][$defaultConnection]["host"],
+            'database'  => $GLOBALS["database"]["connections"][$defaultConnection]["db_name"],
+            'username'  => $GLOBALS["database"]["connections"][$defaultConnection]["username"],
+            'password'  => $GLOBALS["database"]["connections"][$defaultConnection]["password"],
             'charset'   => 'utf8',
             'collation' => 'utf8_unicode_ci',
-        
         ]);
 
 
-$capsule->setAsGlobal();
-// Setup the Eloquent ORM... (optional; unless you've used setEventDispatcher())
-$capsule->bootEloquent();
-// $users = Capsule::table('users')->get();
-//print_r($users);
+        $capsule->setAsGlobal();
+        // Setup the Eloquent ORM... (optional; unless you've used setEventDispatcher())
+        $capsule->bootEloquent();
 
         $request = new \Core\HTTP\Request();
         $response = new \Core\HTTP\Response();
@@ -83,6 +92,8 @@ $capsule->bootEloquent();
         $router->post("/auth/me", ['controller' => 'Auth\\AuthController', 'action' => 'authMe']);
         $router->post("/auth/register", ['controller' => 'Auth\\AuthController', 'action' => 'register']);
         $router->post("/auth/update_me", ['controller' => 'Auth\\AuthController', 'action' => 'updateUserInfo']);
+        $router->post("/auth/password_recovery", ['controller' => 'Auth\\AuthController', 'action' => 'passwordRecovery']);
+        $router->post("/auth/check_confirmation_code", ['controller' => 'Auth\\AuthController', 'action' => 'checkConfirmationCode']);
         $router->post("/auth/update_pass", ['controller' => 'Auth\\AuthController', 'action' => 'updatePassword']);
         
 
@@ -100,8 +111,11 @@ $capsule->bootEloquent();
         
         $router->post("/cust/pref/add", ['controller' => 'User\\UserController', 'action' => 'insertPreference']);
         
+        $router->get("/staff/([0-9]+)", ['controller' => 'User\\UserController', 'action' => 'getStaff']);
+
         $router->get("/customer/([0-9]+)", ['controller' => 'User\\UserController', 'action' => 'getCustomer']);
-		$router->get("/staff/([0-9]+)", ['controller' => 'User\\UserController', 'action' => 'getStaff']);
+
+        $router->get("/managers/([0-9]+)", ['controller' => 'User\\UserController', 'action' => 'getManager']);
 
         $router->post("/reviews/add", ['controller' => 'Review\\ReviewController', 'action' => 'postCustomerReview']);
         $router->get("/reviews/([0-9]+)", ['controller' => 'Review\\ReviewController', 'action' => 'index']);
@@ -121,6 +135,7 @@ $capsule->bootEloquent();
         // ------------------------------------------------------------
         $router->get("/restaurants", ['controller' => 'Restaurant\\RestaurantController', 'action' => 'index']);
         $router->get("/restaurants/([0-9]+)", ['controller' => 'Restaurant\\RestaurantController', 'action' => 'show']);
+        $router->get("/restaurants/qr/([0-9]+)", ['controller' => 'Restaurant\\RestaurantController', 'action' => 'showQrCode']);
         $router->get("/restaurants/dash/([0-9]+)", ['controller' => 'Order\\OrderController', 'action' => 'dashboard']);
         $router->get("/restaurants/branch/([0-9]+)", ['controller' => 'Restaurant\\RestaurantController', 'action' => 'recommendBranches']);
 
@@ -151,6 +166,8 @@ $capsule->bootEloquent();
         $router->post("/tables", ['controller' => 'Table\\TableController', 'action' => 'insertTable']);
 
         $router->get("/customer/reservations/([0-9]+)", ['controller' => 'User\\UserController', 'action' => 'showReservations']);
+
+        $router->post("/customer/reservations", ['controller' => 'User\\UserController', 'action' => 'addReservation'])->middleware(["customer"]);
 
         // Resolve
         $router->resolve();

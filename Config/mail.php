@@ -11,11 +11,11 @@ return
         "smtp" =>
         [
             "transport" => "smtp",
-            "host" => "mail.nofipay.net",
+            "host" => "smtp.gmail.com",
             "port" => 465,
             "encryption" => "tls",
-            "username" => "api@nofipay.net",
-            "password" => "kY58&.D^#@Uk",
+            "username" => "engr2017@gmail.com",
+            "password" => "bellaciao99",
         ],
     ],
 
@@ -25,7 +25,7 @@ return
      */
     "from" =>
     [
-        "address" => "api@nofipay.net",
-        "name" => "test",
+        "address" => "engr2017@gmail.com",
+        "name" => "Tarabeza",
     ],
 ];

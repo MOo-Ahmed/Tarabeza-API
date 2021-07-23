@@ -19,16 +19,24 @@ class UserModel extends \Illuminate\Database\Eloquent\Model
 
 		return $res ;
 	}
-	
-	
-    public function staff($_id){
+
+	public function manager($_id)
+	{
+		$res = Capsule::table('restaurant_managers')->select('restaurant_managers.*')
+				->where('restaurant_managers.user_id', '=', $_id)
+				->get();
+
+		return $res ;
+	}
+
+	public function staff($_id)
+	{
 		$res = Capsule::table('staff')->select('staff.*')
 				->where('staff.user_id', '=', $_id)
 				->get();
 
 		return $res ;
 	}
-	
 	
 	public function findReservationsByUserId($_id)
     {
@@ -37,6 +45,20 @@ class UserModel extends \Illuminate\Database\Eloquent\Model
 		    	->join('users', 'users.id', '=', 'customers.id')
 		    	->where('reservations.customer_id', '=', $_id)
 		    	->get();
+    	
+
+		
+		return $res;
+    }
+
+    public function insertReservation($_input)
+    {
+        $res = Capsule::table('reservations')->insertGetId(array(
+        'customer_id'   => $_input['customer_id'],
+        'restaurant_id' => $_input['restaurant_id'], 
+        'table_id' => $_input['table_id'], 
+        'comment' => $_input['comment'], 
+        'requested_at'  => $_input['requested_at']));
     	
 
 		

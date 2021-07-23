@@ -11,7 +11,7 @@ class Helper
 	public static function generateConfirmationCode($_len = 5)
 	{
 		// you can increase the digits by changing 10 to desired digit
-		$random = substr(number_format(time() * rand(), 0, '', ''), 0, $_len);
+		$random = rand(10000, 99999);
 		return $random;
 	}
 
