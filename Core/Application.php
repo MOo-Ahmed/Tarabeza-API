@@ -101,6 +101,7 @@ $capsule->bootEloquent();
         $router->post("/cust/pref/add", ['controller' => 'User\\UserController', 'action' => 'insertPreference']);
         
         $router->get("/customer/([0-9]+)", ['controller' => 'User\\UserController', 'action' => 'getCustomer']);
+		$router->get("/staff/([0-9]+)", ['controller' => 'User\\UserController', 'action' => 'getStaff']);
 
         $router->post("/reviews/add", ['controller' => 'Review\\ReviewController', 'action' => 'postCustomerReview']);
         $router->get("/reviews/([0-9]+)", ['controller' => 'Review\\ReviewController', 'action' => 'index']);

@@ -28,7 +28,17 @@ class AuthModel extends \Illuminate\Database\Eloquent\Model
 
   public function insert($_input)
   {
-    return AuthModel::create($_input);
+    $user = Capsule::table('users')->insertGetId($_input);
+    if($user){
+      $res = Capsule::table('customers')->insert(array(
+        "user_id" => $user
+      ));
+      return $res;
+    }
+    else{
+      return "DB Failure";
+    }
+    
   }
 
   public function upd($_input)
@@ -99,8 +109,4 @@ class AuthModel extends \Illuminate\Database\Eloquent\Model
     //$user = insert($_input);
     
   }
-
-
-
-
 }

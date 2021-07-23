@@ -19,6 +19,20 @@ class UserController extends \Core\Controller
 		}
 	} 
 	
+	public function getStaff($_id){
+		$model = new UserModel();
+		$staff = $model->staff($_id);
+
+		if($staff)
+		{
+			$this->response->renderOk($this->response::HTTP_OK, $staff);
+		}
+		else
+		{
+			$this->response->renderFail($this->response::HTTP_NOT_FOUND, "Could not find specified user.");
+		}
+	}
+	
 	public function showReservations($_id)
 	{
 		$model = new UserModel();

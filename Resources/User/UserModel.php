@@ -20,6 +20,16 @@ class UserModel extends \Illuminate\Database\Eloquent\Model
 		return $res ;
 	}
 	
+	
+    public function staff($_id){
+		$res = Capsule::table('staff')->select('staff.*')
+				->where('staff.user_id', '=', $_id)
+				->get();
+
+		return $res ;
+	}
+	
+	
 	public function findReservationsByUserId($_id)
     {
     	$res = Capsule::table('reservations')->select('reservations.*')
