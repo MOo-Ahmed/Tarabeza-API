@@ -61,7 +61,8 @@ class OrderModel extends \Illuminate\Database\Eloquent\Model
 								'order_details.quantity as qty', 
 								'order_details.total as total',
 								'users.first_name AS first_name',
-								'users.last_name AS last_name')
+								'users.last_name AS last_name',
+                               'restaurants.name AS restaurant_name')
 				->where('orders.is_finished', '=', 0)
 				->where('orders.is_deleted', '=', 0)
 				->where($selector, '=', $id)
@@ -69,6 +70,7 @@ class OrderModel extends \Illuminate\Database\Eloquent\Model
                 ->join('users', 'users.id', '=', 'customers.user_id') 
 				->join('order_details', 'orders.id', '=', 'order_details.order_id')
 				->join('items', 'order_details.meal_id', '=', 'items.id')
+                ->join('restaurants', 'restaurants.id', '=', 'orders.restaurant_id')
 				   
                 ->get();
             

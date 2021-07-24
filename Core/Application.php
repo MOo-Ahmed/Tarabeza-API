@@ -166,6 +166,7 @@ class Application
         $router->post("/tables", ['controller' => 'Table\\TableController', 'action' => 'insertTable']);
 
         $router->get("/customer/reservations/([0-9]+)", ['controller' => 'User\\UserController', 'action' => 'showReservations']);
+        $router->get("/restaurant/reservations/([0-9]+)", ['controller' => 'Restaurant\\RestaurantController', 'action' => 'showReservations']);
 
         $router->post("/customer/reservations", ['controller' => 'User\\UserController', 'action' => 'addReservation'])->middleware(["customer"]);
 

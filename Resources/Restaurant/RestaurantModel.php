@@ -24,5 +24,21 @@ class RestaurantModel extends \Illuminate\Database\Eloquent\Model
                     ->update($_input);
     	
     }
+    
+    public function findReservationsByRestaurantId($_id)
+    {
+    	$res = Capsule::table('reservations')->select('reservations.*',
+                                     'users.first_name AS first_name',
+                                    'users.last_name AS last_name',
+                                    'restaurants.name AS restaurant_name')
+		    	->join('customers', 'customers.id', '=', 'reservations.customer_id')
+		    	->join('users', 'users.id', '=', 'customers.user_id')
+                ->join('restaurants', 'restaurants.id', '=', 'reservations.restaurant_id')
+		    	->where('reservations.restaurant_id', '=', $_id)
+		    	->get();
+    	
 
+		
+		return $res;
+    }
 }

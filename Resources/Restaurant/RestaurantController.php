@@ -24,6 +24,14 @@ class RestaurantController extends \Core\Controller
 		imagedestroy($image);
 	}
 
+    public function showReservations($_id)
+	{
+		$model = new RestaurantModel();
+		$reservations = $model->findReservationsByRestaurantId($_id);
+
+		$this->response->renderOk($this->response::HTTP_OK, $reservations);
+	}
+    
 	public function show($_id)
 	{
 		if(is_numeric($_id) != true){
